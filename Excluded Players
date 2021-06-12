@@ -1,0 +1,4 @@
+local exclude = {
+'312858682'
+}
+return exclude 
