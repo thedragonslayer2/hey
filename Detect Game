@@ -1,0 +1,22 @@
+if game.PlaceId == 5765666934 or game.PlaceId == 5343994291 or game.PlaceId == 5765666554 then--outlaster
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Outlaster'))()
+elseif game.PlaceId == 6610021055 then--Noob Army Tycoon
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Noob%20Army%20Tycoon'))()
+elseif game.PlaceId == 6490016198 then--Slayer Tycoon
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Slayer%20Tycoon'))()
+elseif game.PlaceId == 221718525 then--Ninja Tycoon
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Ninja%20Tycoon'))()
+elseif game.PlaceId == 5534174456 then--Resort Tycoon 🌴
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Resort%20Tycoon'))()
+elseif game.PlaceId == 6769764667 then--Factory Simulator
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Factory%20Simulator'))()
+else
+    wait(3)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/No%20Game%20Found"))()
+end
