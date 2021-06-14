@@ -16,6 +16,9 @@ elseif game.PlaceId == 5534174456 then--Resort Tycoon 🌴
 elseif game.PlaceId == 6769764667 then--Factory Simulator
 	wait(3)
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Factory%20Simulator'))()
+elseif game.PlaceId == 5233782396 then--Creatures of Sonaria
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Creatures%20of%20Sonaria'))()
 else
     wait(3)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/No%20Game%20Found"))()
