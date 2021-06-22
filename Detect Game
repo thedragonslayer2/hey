@@ -1,17 +1,3 @@
-spawn(function()
-    if not game:IsLoaded() then repeat wait() until game:IsLoaded() end
-    local vu = game:GetService("VirtualUser")
-    game:GetService 'Players'.LocalPlayer.Idled:connect(function()
-        pcall(function()
-            vu:CaptureController()
-            vu:ClickButton2(Vector2.new())
-        end)
-        pcall(function()
-            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-            u:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-        end)
-    end)
-end)
 if game.PlaceId == 5765666934 or game.PlaceId == 5343994291 or game.PlaceId == 5765666554 then--outlaster
 	wait(3)
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Outlaster'))()
