@@ -28,6 +28,9 @@ elseif game.PlaceId == 6704182071 then--Cooking Simulator
 elseif game.PlaceId == 6514274883 then--Dream Island ✈️ Tycoon
 	wait(3)
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Dream%20Island%20Tycoon'))()
+elseif game.PlaceId == 1828509885 then--Egg Farm Simulator
+	wait(3)
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Egg%20Farm%20Simulator'))()
 else
     wait(3)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/No%20Game%20Found"))()
