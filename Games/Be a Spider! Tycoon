@@ -21,7 +21,7 @@ spawn(function()
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 0)
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 1)
 					end
-					if string.find(tostring(i), "00") then
+					if string.find(tostring(i), "50") then
 						wait()
 					end
 				end)
