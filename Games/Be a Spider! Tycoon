@@ -9,6 +9,30 @@ local autofarm = library:CreateWindow"Be a Spider! Tycoon"
 autofarm:AddToggle{ text = "Auto Build", flag = "build" }
 autofarm:AddToggle{ text = "Auto Collect Bugs", flag = "bug" }
 autofarm:AddToggle{ text = "Auto Sell", flag = "sell" }
+autofarm:AddButton{
+	text = "Redeem All Codes",
+	callback = function()
+		request = http_request or request or HttpPost or syn.request
+		local Response = request{
+			Url = "https://www.mrguider.org/roblox/be-a-spider-tycoon-codes-wiki/",
+			Method = "GET"
+		}
+
+		function nextline(s)
+			if s:sub(-1) ~= "\n" then s = s .. "\n" end
+			return s:gmatch"(.-)\n"
+		end
+
+		for line in nextline(Response.Body) do
+			if string.find(line, "<pre>") then
+				local x = string.gsub(line, "<pre>", "")
+				local y = string.gsub(x, "</pre>", "")
+				warn(y)
+				game:GetService"ReplicatedStorage".ClientRemotes.Data.UseCode:InvokeServer(tostring(y))
+			end
+		end
+	end
+}
 spawn(function()
 	local bum = 0
 	while wait() do
@@ -21,9 +45,7 @@ spawn(function()
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 0)
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 1)
 					end
-					if string.find(tostring(i), "25") then
-						wait()
-					end
+					if string.find(tostring(i), "25") or string.find(tostring(i), "50") or string.find(tostring(i), "75") or string.find(tostring(i), "00") then wait() end
 				end)
 			end
 		end
@@ -107,7 +129,7 @@ autofarm:AddButton{ text = "Switch Server", callback = function(v) serverhop() e
 autofarm:AddLabel{ text = "RightAlt To Hide/Show Gui" }
 autofarm:AddButton{
 	text = "Showcase Link",
-	callback = function() setclipboard(tostring"https://youtu.be/ZSA4vexSos8") end
+	callback = function() setclipboard(tostring"https://youtu.be/eUMSoLjIH40") end
 }
 autofarm:AddLabel{ text = "Mr Jack" }
 library:Init()
