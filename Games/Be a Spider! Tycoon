@@ -107,7 +107,7 @@ autofarm:AddButton{ text = "Switch Server", callback = function(v) serverhop() e
 autofarm:AddLabel{ text = "RightAlt To Hide/Show Gui" }
 autofarm:AddButton{
 	text = "Showcase Link",
-	callback = function() setclipboard(tostring"https://youtu.be/eUMSoLjIH40") end
+	callback = function() setclipboard(tostring"https://youtu.be/ZSA4vexSos8") end
 }
 autofarm:AddLabel{ text = "Mr Jack" }
 library:Init()
