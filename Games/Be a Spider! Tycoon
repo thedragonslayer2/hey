@@ -17,11 +17,12 @@ spawn(function()
 				pcall(function()
 					if library.flags.bug and v:FindFirstChild"SpawnPoint" then
 						if v:FindFirstChild"Hitbox" then v.Hitbox.CFrame = client.Character.PlayerHitbox.CFrame end
-						game:FindService"RunService".Heartbeat:wait()
 					elseif library.flags.build and client.PlayerGui.Main.LeftSideBtns.WebsAmount.Button.Amount.Text ~= "0" and v:FindFirstChild(v.Name) and v:FindFirstChild"TileProgressBill" and v:FindFirstChild"ConstructorPrefab" then
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 0)
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 1)
-						game:FindService"RunService".Heartbeat:wait()
+					end
+					if string.find(tostring(i), "00") then
+						wait()
 					end
 				end)
 			end
