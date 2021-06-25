@@ -21,8 +21,8 @@ spawn(function()
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 0)
 						firetouchinterest(client.Character.PlayerHitbox, v[v.Name], 1)
 					end
-					if string.find(tostring(i), "50") then
-						wait()
+					if string.find(tostring(i), "25") then
+						game:FindService"RunService".Heartbeat:wait()
 					end
 				end)
 			end
