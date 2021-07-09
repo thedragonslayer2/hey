@@ -1,29 +1,43 @@
 wait(1.5)
-if game.PlaceId == 5765666934 or game.PlaceId == 5343994291 or game.PlaceId == 5765666554 then--outlaster
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Outlaster'))()
-elseif game.PlaceId == 6610021055 then--Noob Army Tycoon
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Noob%20Army%20Tycoon'))()
-elseif game.PlaceId == 6490016198 then--Slayer Tycoon
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Slayer%20Tycoon'))()
-elseif game.PlaceId == 221718525 then--Ninja Tycoon
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Ninja%20Tycoon'))()
-elseif game.PlaceId == 5534174456 then--Resort Tycoon 🌴
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Resort%20Tycoon'))()
-elseif game.PlaceId == 6769764667 then--Factory Simulator
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Factory%20Simulator'))()
-elseif game.PlaceId == 5233782396 then--Creatures of Sonaria
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Creatures%20of%20Sonaria'))()
-elseif game.PlaceId == 4505214429 then--Soul Eater
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Soul%20Eater'))()
-elseif game.PlaceId == 6704182071 then--Cooking Simulator
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Cooking%20Simulator'))()
-elseif game.PlaceId == 6514274883 then--Dream Island ✈️ Tycoon
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Dream%20Island%20Tycoon'))()
-elseif game.PlaceId == 1828509885 then--Egg Farm Simulator
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Egg%20Farm%20Simulator'))()
-elseif game.PlaceId == 6794368433 then--Be a Spider! Tycoon
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Be%20a%20Spider!%20Tycoon'))()
+if game.PlaceId == 5.765666934e9 or game.PlaceId == 5.343994291e9 or game.PlaceId == 5.765666554e9 then
+	-- outlaster
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Outlaster")()
+elseif game.PlaceId == 6.610021055e9 then
+	-- Noob Army Tycoon
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Noob%20Army%20Tycoon")()
+elseif game.PlaceId == 6.490016198e9 then
+	-- Slayer Tycoon
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Slayer%20Tycoon")()
+elseif game.PlaceId == 2.21718525e8 then
+	-- Ninja Tycoon
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Ninja%20Tycoon")()
+elseif game.PlaceId == 5.534174456e9 then
+	-- Resort Tycoon 🌴
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Resort%20Tycoon")()
+elseif game.PlaceId == 6.769764667e9 then
+	-- Factory Simulator
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Factory%20Simulator")()
+elseif game.PlaceId == 5.233782396e9 then
+	-- Creatures of Sonaria
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Creatures%20of%20Sonaria")()
+elseif game.PlaceId == 4.505214429e9 then
+	-- Soul Eater
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Soul%20Eater")()
+elseif game.PlaceId == 6.704182071e9 then
+	-- Cooking Simulator
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Cooking%20Simulator")()
+elseif game.PlaceId == 6.514274883e9 then
+	-- Dream Island ✈️ Tycoon
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Dream%20Island%20Tycoon")()
+elseif game.PlaceId == 1.828509885e9 then
+	-- Egg Farm Simulator
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Egg%20Farm%20Simulator")()
+elseif game.PlaceId == 6.794368433e9 then
+	-- Be a Spider! Tycoon
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Be%20a%20Spider!%20Tycoon")()
+elseif game.PlaceId == 6.458855006e9 then
+	-- Dragon Ball Final Hope
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Dragon%20Ball%20Final%20Hope")()
 else
-    wait(3)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/No%20Game%20Found"))()
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/No%20Game%20Found")()
 end
