@@ -8,6 +8,7 @@ function serversearch()
 		if type(v) == "table" and tonumber(v.maxPlayers) > tonumber(v.playing) and v.id ~= game.JobId then
 			goodserver = v.id
 			print("Server Found" .. v.id)
+			game:GetService"StarterGui":SetCore("SendNotification", { Title = "Notification", Text = "Teleporting To Server\nID: " .. v.id, Duration = 5 })
 			game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
 			wait(6)
 		end
@@ -32,5 +33,5 @@ end
 getservers()
 if goodserver == nil then
 	print"Server Hop Failed"
-	game:GetService"StarterGui":SetCore("SendNotification", { Title = "Failed", Text = "No Server Found", Duration = 2 })
+	game:GetService"StarterGui":SetCore("SendNotification", { Title = "Notification", Text = "No Server Found", Duration = 2 })
 end
