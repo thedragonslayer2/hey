@@ -1,0 +1,37 @@
+
+	spawn(function()
+		if getconnections then
+			for i, v in next, getconnections(game:GetService"Players".LocalPlayer.Idled) do v:Disable() end
+		else
+			local vu = game:GetService"VirtualUser"
+			game:GetService"Players".LocalPlayer.Idled:connect(function()
+				pcall(function()
+					vu:CaptureController()
+					wait(1)
+					vu:ClickButton2(Vector2.new())
+				end)
+				pcall(function()
+					vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+					wait(1)
+					vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+				end)
+			end)
+		end
+	end)
+	spawn(function()
+		if hookfunction then
+			local old
+			old = hookfunction(getrawmetatable(game).__newindex, function(t, k, v)
+				if t == game:GetService"Players".LocalPlayer and k == "DevCameraOcclusionMode" then v = "Invisicam"
+				elseif t == game:GetService"Players".LocalPlayer and k == "CameraMaxZoomDistance" then v = 9e9 end
+				return old(t, k, v)
+			end)
+			game:GetService"Players".LocalPlayer.DevCameraOcclusionMode = "Invisicam"
+			game:GetService"Players".LocalPlayer.CameraMaxZoomDistance = 9e9
+		else
+			while wait() do
+				game.Players.LocalPlayer.DevCameraOcclusionMode = "Invisicam"
+				game.Players.LocalPlayer.CameraMaxZoomDistance = 9e9
+			end
+		end
+	end)
