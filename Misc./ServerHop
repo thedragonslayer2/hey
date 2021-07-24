@@ -3,7 +3,6 @@ if not IrisNotificationMrJack then
 end
 warn"Looking For A Server"
 IrisNotificationMrJack(1, "Notification", "Looking For A Server", 2)
-game:GetService"StarterGui":SetCore("SendNotification", { Title = "Notification", Text = "Looking For A Server", Duration = 2 })
 local goodserver = nil
 local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
 
