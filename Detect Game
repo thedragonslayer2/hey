@@ -23,10 +23,6 @@ local detectgames = {
 		["GameID"] = { "4505214429" },
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Soul%20Eater"
 	},
-	["Noob Army Tycoon"] = {
-		["GameID"] = { "6610021055" },
-		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Noob%20Army%20Tycoon"
-	},
 	["Resort Tycoon"] = {
 		["GameID"] = { "5534174456" },
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Resort%20Tycoon"
