@@ -25,7 +25,6 @@ local animations = {
 	"Zombie"
 }
 local playanimation = function(name)
-    game:GetService"StarterGui":SetCore("SendNotification", { Title = "Animation", Text = tostring(name), Duration = 1})
 	if name == "Astronaut" then
 		game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId = "rbxassetid://891621366"
 		game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId = "rbxassetid://891633237"
@@ -33,7 +32,7 @@ local playanimation = function(name)
 		game.Players.LocalPlayer.Character.Animate.walk.WalkAnim.AnimationId = "rbxassetid://891636393"
 		game.Players.LocalPlayer.Character.Animate.jump.JumpAnim.AnimationId = "rbxassetid://891627522"
 		game.Players.LocalPlayer.Character.Animate.climb.ClimbAnim.AnimationId = "rbxassetid://891609353"
-		game.Players.LocalPlayer.Character.Animate.fall.AnimationId = "rbxassetid://891617961"
+		game.Players.LocalPlayer.Character.Animate.fall.FallAnim.AnimationId = "rbxassetid://891617961"
 		game.Players.LocalPlayer.Character.Animate.swim.Swim.AnimationId = "rbxassetid://891639666"
 		game.Players.LocalPlayer.Character.Animate.swimidle.SwimIdle.AnimationId = "rbxassetid://891663592"
 	elseif name == "Bubbly" then
@@ -266,7 +265,7 @@ local playanimation = function(name)
 		game.Players.LocalPlayer.Character.Animate.swim.Swim.AnimationId = "rbxassetid://616165109"
 		game.Players.LocalPlayer.Character.Animate.swimidle.SwimIdle.AnimationId = "rbxassetid://616166655"
 	end
+	IrisNotificationMrJack(1, "Animation", tostring(name), 1)
 	return playanimation
 end
-
 return animations, playanimation
