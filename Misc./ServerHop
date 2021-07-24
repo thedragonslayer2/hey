@@ -19,7 +19,7 @@ function serversearch()
 end
 
 function getservers()
-	serversearch()
+	pcall(getservers)
 	for i, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink))) do
 		if i == "nextPageCursor" then
 			if gamelink:find"&cursor=" then
@@ -28,12 +28,12 @@ function getservers()
 				gamelink = gamelink:gsub(b, "")
 			end
 			gamelink = gamelink .. "&cursor=" .. v
-			getservers()
+			pcall(getservers)
 		end
 	end
 end
 
-getservers()
+pcall(getservers)
 if goodserver == nil then
 	warn"Server Hop Failed"
 	IrisNotificationMrJack(1, "Notification", "No Server Found", 2)
