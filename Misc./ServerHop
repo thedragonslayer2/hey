@@ -19,7 +19,7 @@ function serversearch()
 end
 
 function getservers()
-	pcall(getservers)
+	pcall(serversearch)
 	for i, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink))) do
 		if i == "nextPageCursor" then
 			if gamelink:find"&cursor=" then
