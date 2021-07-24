@@ -456,4 +456,17 @@ NotificationTable.WallNotification = function(...)
 	end)(...)
 end
 
+NotificationTable.ClearAllNotifications = function()
+	for _, Folder in next, game:GetService("CoreGui"):FindFirstChild("RobloxGui"):GetChildren() do
+		if Folder.Name:match("NotificationFolder") or Folder.Name:match("WallNotificationFolder") then
+			Folder:Destroy();
+		end
+	end
+	for _, Folder in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
+		if Folder.Name:match("NotificationFolder") or Folder.Name:match("WallNotificationFolder") then
+			Folder:Destroy();
+		end
+	end
+end
+
 return NotificationTable;
