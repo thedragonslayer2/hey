@@ -1,4 +1,8 @@
 local detectgames = {
+	["My Dragon Tycoon"] = {
+		["GameID"] = { "6296076147" },
+		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/My%20Dragon%20Tycoon"
+	},
 	["Dragon Ball Final Hope"] = {
 		["GameID"] = { "6458855006" },
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Dragon%20Ball%20Final%20Hope"
@@ -40,7 +44,7 @@ local detectgames = {
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Creatures%20of%20Sonaria"
 	},
 	["Outlaster"] = {
-		["GameID"] = { "5765666934", "5343994291", "5765666554" },
+		["GameID"] = { "5343994291", "5765666934", "5765666554" },
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Outlaster"
 	}
 }
