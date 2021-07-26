@@ -1,6 +1,11 @@
 local detectgames = {
 	["My Dragon Tycoon"] = {
-		["GameID"] = { "6296076147" },
+		["GameID"] = {
+			"6296076147",
+			"6433667192",
+			"6552294669",
+			"7074935501"
+		},
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/My%20Dragon%20Tycoon"
 	},
 	["Dragon Ball Final Hope"] = {
@@ -58,3 +63,4 @@ for name, data in next, detectgames do
 	end
 end
 loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/No%20Game%20Found")()
+return true
