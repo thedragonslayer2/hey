@@ -2,7 +2,6 @@ if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 IrisNotificationMrJack(1, "Notification", "Checking Servers!", 2)
-local DontTeleportTheSameNumber = true
 local maxplayers = math.huge
 local serversmaxplayer
 local goodserver
@@ -34,12 +33,9 @@ function getservers()
 end
 
 getservers()
-if DontTeleportTheSameNumber then
-	if #game:GetService"Players":GetPlayers() - 1 == maxplayers then
-		return IrisNotificationMrJack(1, "Notification", "It has same number of players (except you)", 2)
-	elseif goodserver == game.JobId then
-		return IrisNotificationMrJack(1, "Notification", "Your current server is the most empty server atm", 2)
-	end
+if goodserver == game.JobId then
+	return IrisNotificationMrJack(1, "Notification", "Your current server is the most empty server atm", 2)
 end
 IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
 game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
+return true
