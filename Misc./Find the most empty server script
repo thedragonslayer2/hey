@@ -1,0 +1,45 @@
+if not IrisNotificationMrJack then
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
+elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
+IrisNotificationMrJack(1, "Notification", "Checking Servers!", 2)
+local DontTeleportTheSameNumber = true
+local maxplayers = math.huge
+local serversmaxplayer
+local goodserver
+local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+
+function serversearch()
+	for _, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink)).data) do
+		if type(v) == "table" and maxplayers > v.playing then
+			serversmaxplayer = v.maxPlayers
+			maxplayers = v.playing
+			goodserver = v.id
+		end
+	end
+end
+
+function getservers()
+	serversearch()
+	for i, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink))) do
+		if i == "nextPageCursor" then
+			if gamelink:find"&cursor=" then
+				local a = gamelink:find"&cursor="
+				local b = gamelink:sub(a)
+				gamelink = gamelink:gsub(b, "")
+			end
+			gamelink = gamelink .. "&cursor=" .. v
+			getservers()
+		end
+	end
+end
+
+getservers()
+if DontTeleportTheSameNumber then
+	if #game:GetService"Players":GetPlayers() - 1 == maxplayers then
+		return IrisNotificationMrJack(1, "Notification", "It has same number of players (except you)", 2)
+	elseif goodserver == game.JobId then
+		return IrisNotificationMrJack(1, "Notification", "Your current server is the most empty server atm", 2)
+	end
+end
+IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
+game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
