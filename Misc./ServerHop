@@ -1,8 +1,6 @@
 if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
-wait(.2)
-IrisNotificationMrJack(1, "Notification", "Checking Servers!", 2)
 warn"Looking For A Server"
 IrisNotificationMrJack(1, "Notification", "Looking For A Server", 2)
 local goodserver = nil
