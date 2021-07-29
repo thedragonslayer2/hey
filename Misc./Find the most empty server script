@@ -9,7 +9,7 @@ local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/serve
 
 function serversearch()
 	for _, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink)).data) do
-		if type(v) == "table" and maxplayers > v.playing then
+		if type(v) == "table" and tonumber(maxplayers) > tonumber(v.playing) then
 			serversmaxplayer = v.maxPlayers
 			maxplayers = v.playing
 			goodserver = v.id
@@ -18,7 +18,7 @@ function serversearch()
 end
 
 function getservers()
-	serversearch()
+	pcall(serversearch)
 	for i, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink))) do
 		if i == "nextPageCursor" then
 			if gamelink:find"&cursor=" then
@@ -27,13 +27,13 @@ function getservers()
 				gamelink = gamelink:gsub(b, "")
 			end
 			gamelink = gamelink .. "&cursor=" .. v
-			getservers()
+			pcall(getservers)
 		end
 	end
 end
 
-getservers()
-if goodserver == game.JobId then
+pcall(getservers)
+if goodserver == game.JobId or maxplayers == #game:GetService"Players":GetChildren() then
 	return IrisNotificationMrJack(1, "Notification", "Your current server is the most empty server atm", 2)
 end
 IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
