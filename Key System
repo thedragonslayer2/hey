@@ -1,4 +1,4 @@
 if not IrisNotificationMrJack then
 loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end	
-IrisNotificationMrJack(2, "Test", "Try Again, Currently Fixing The script! ", 9e9)
+IrisNotificationMrJack(2, "Test", "Try Again later, Currently Fixing The script! ", 9e9)
