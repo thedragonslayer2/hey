@@ -1,6 +1,7 @@
 if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
+IrisNotificationMrJack(1, "Notification", "Checking Servers!", 2)
 warn"Looking For A Server"
 IrisNotificationMrJack(1, "Notification", "Looking For A Server", 2)
 local goodserver = nil
@@ -8,13 +9,15 @@ local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/serve
 
 function serversearch()
 	for _, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink)).data) do
-		if type(v) == "table" and tonumber(v.maxPlayers) > tonumber(v.playing) and v.id ~= game.JobId then
-			goodserver = v.id
-			warn("Server Found " .. v.id)
-			IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. v.id, 5)
-			game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
-			wait(6)
-		end
+		pcall(function()
+			if type(v) == "table" and tonumber(v.maxPlayers) > tonumber(v.playing) and v.id ~= game.JobId then
+				goodserver = v.id
+				warn("Server Found " .. v.id)
+				IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. v.id, 5)
+				game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
+				wait(6)
+			end
+		end)
 	end
 end
 
@@ -38,3 +41,4 @@ if goodserver == nil then
 	warn"Server Hop Failed"
 	IrisNotificationMrJack(1, "Notification", "No Server Found", 2)
 end
+return true
