@@ -3,17 +3,17 @@ if not IrisNotificationMrJack then
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 IrisNotificationMrJack(1, "Notification", "Checking Servers!", 2)
 local maxplayers = math.huge
-local serversmaxplayer
 local goodserver
 local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
 
 function serversearch()
 	for _, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink)).data) do
-		if type(v) == "table" and tonumber(maxplayers) > tonumber(v.playing) then
-			serversmaxplayer = v.maxPlayers
-			maxplayers = v.playing
-			goodserver = v.id
-		end
+		pcall(function()
+			if type(v) == "table" and tonumber(maxplayers) > tonumber(v.playing) then
+				maxplayers = v.playing
+				goodserver = v.id
+			end
+		end)
 	end
 end
 
