@@ -1,5 +1,4 @@
 -- anti afk and more
-repeat wait() until game:IsLoaded()
 local players = game:GetService"Players"
 local client = players.LocalPlayer
 if hookfunction and getrawmetatable and setreadonly then
@@ -36,10 +35,8 @@ else
 	end)
 end
 -- invisicam
-spawn(function()
-	while wait() do
-		client.DevCameraOcclusionMode = "Invisicam"
-		client.CameraMaxZoomDistance = 9e9
-	end
-end)
+client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
+client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e9 end)
+client.DevCameraOcclusionMode = "Invisicam"
+client.CameraMaxZoomDistance = 9e9
 return warn"ANTI AFK ACTIVATED!"
