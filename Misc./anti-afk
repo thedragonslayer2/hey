@@ -36,7 +36,7 @@ else
 end
 -- invisicam
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
-client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e9 end)
+client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
 client.DevCameraOcclusionMode = "Invisicam"
-client.CameraMaxZoomDistance = 9e9
+client.CameraMaxZoomDistance = 1e4
 return warn"ANTI AFK ACTIVATED!"
