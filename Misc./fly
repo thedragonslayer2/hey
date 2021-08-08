@@ -1,0 +1,138 @@
+local fly = { iyflyspeed = 1, isFlying = false, FLYING = false }
+local Players = game:GetService"Players"
+local LP = Players.LocalPlayer
+local LocalPlayer = Players.LocalPlayer
+local Mouse = Players.LocalPlayer:GetMouse()
+local CONTROL = {
+	F = 0,
+	B = 0,
+	L = 0,
+	R = 0
+}
+local lCONTROL = {
+	F = 0,
+	B = 0,
+	L = 0,
+	R = 0
+}
+
+function fly:sFLY()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+	local T = game.Players.LocalPlayer.Character.HumanoidRootPart
+	CONTROL = {
+		F = 0,
+		B = 0,
+		L = 0,
+		R = 0
+	}
+	lCONTROL = {
+		F = 0,
+		B = 0,
+		L = 0,
+		R = 0
+	}
+	local SPEED = 0
+
+	local function FLY()
+		fly.LYING = true
+		local BG = Instance.new("BodyGyro", T)
+		local BV = Instance.new("BodyVelocity", T)
+		BG.P = 9e4
+		BG.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+		BG.CFrame = T.CFrame
+		BV.Velocity = Vector3.new(0, 0.1, 0)
+		BV.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+		spawn(function()
+			repeat
+				wait()
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 then SPEED = 50
+				elseif not(CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0) and SPEED ~= 0 then SPEED = 0 end
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 then
+					BV.velocity = (workspace.CurrentCamera.CFrame.lookVector * (CONTROL.F + CONTROL.B) + (workspace.CurrentCamera.CFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B) * 0.2, 0).p - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+					lCONTROL = {
+						F = CONTROL.F,
+						B = CONTROL.B,
+						L = CONTROL.L,
+						R = CONTROL.R
+					}
+				elseif CONTROL.L + CONTROL.R == 0 and CONTROL.F + CONTROL.B == 0 and SPEED ~= 0 then
+					BV.velocity = (workspace.CurrentCamera.CFrame.LookVector * (lCONTROL.F + lCONTROL.B) + (workspace.CurrentCamera.CFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B) * 0.2, 0).p - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+				else BV.Velocity = Vector3.new(0, 0.1, 0) end
+				BG.CFrame = workspace.CurrentCamera.CFrame
+			until not fly.FLYING
+			CONTROL = {
+				F = 0,
+				B = 0,
+				L = 0,
+				R = 0
+			}
+			lCONTROL = {
+				F = 0,
+				B = 0,
+				L = 0,
+				R = 0
+			}
+			SPEED = 0
+			BG:Destroy()
+			BV:Destroy()
+		end)
+	end
+
+	Mouse.KeyDown:Connect(function(KEY)
+		if KEY:lower() == "w" then CONTROL.F = fly.iyflyspeed
+		elseif KEY:lower() == "s" then CONTROL.B = -fly.iyflyspeed
+		elseif KEY:lower() == "a" then CONTROL.L = -fly.iyflyspeed
+		elseif KEY:lower() == "d" then CONTROL.R = fly.iyflyspeed end
+	end)
+	Mouse.KeyUp:Connect(function(KEY)
+		if KEY:lower() == "w" then CONTROL.F = 0
+		elseif KEY:lower() == "s" then CONTROL.B = 0
+		elseif KEY:lower() == "a" then CONTROL.L = 0
+		elseif KEY:lower() == "d" then CONTROL.R = 0 end
+	end)
+	FLY()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end
+
+function fly:NOFLY()
+	fly.isFlying = false
+	fly.FLYING = false
+end
+
+function fly:startflying()
+	fly.isFlying = true
+	fly:sFLY()
+	local Float = Instance.new("Part", game.Players.LocalPlayer.Character)
+	Float.Name = "Float"
+	Float.Transparency = 1
+	Float.Size = Vector3.new(6, 1, 6)
+	Float.Anchored = true
+end
+
+local W, onlyonce = Instance.new("Part", workspace)
+W.Size = Vector3.new(5, 2, 5)
+W.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
+W.Transparency = 1
+W.Anchored = true
+W.Name = "LOWL"
+game:GetService"RunService":BindToRenderStep("", 0, function()
+	if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild"Humanoid" then return end
+	if fly.isFlying and LocalPlayer.Character and LocalPlayer.Character.HumanoidRootPart then
+		if W:IsDescendantOf(workspace) then
+			pcall(function()
+				W.CanCollide = true
+				W.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
+			end)
+			onlyonce = true
+		elseif onlyonce then
+			onlyonce = false
+			W = Instance.new("Part", workspace)
+			W.Size = Vector3.new(5, 2, 5)
+			W.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
+			W.Transparency = 1
+			W.Anchored = true
+			W.Name = "LOWL"
+		end
+	else W.CanCollide = false end
+end)
+return fly
