@@ -1,8 +1,8 @@
 -- from rocky2u cmdscript
---i got this from fireztron's Era of Althea script
+-- i got this from fireztron's Era of Althea script
 local fly = { iyflyspeed = 1, isFlying = false, FLYING = false }
 local Players = game:GetService"Players"
-local LocalPlayer = Players.LocalPlayer
+local LocalPlayer = game:GetService"Players".LocalPlayer
 local Mouse = Players.LocalPlayer:GetMouse()
 local CONTROL = {
 	F = 0,
@@ -45,6 +45,7 @@ function fly:sFLY()
 		BV.Velocity = Vector3.new(0, 0.1, 0)
 		BV.MaxForce = Vector3.new(9e9, 9e9, 9e9)
 		spawn(function()
+			LocalPlayer.Character.Humanoid.PlatformStand = true
 			repeat
 				wait()
 				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 then SPEED = 50
@@ -62,6 +63,7 @@ function fly:sFLY()
 				else BV.velocity = Vector3.new(0, 0.1, 0) end
 				BG.cframe = workspace.CurrentCamera.CoordinateFrame
 			until not fly.FLYING
+			LocalPlayer.Character.Humanoid.PlatformStand = false
 			CONTROL = {
 				F = 0,
 				B = 0,
@@ -99,6 +101,11 @@ end
 function fly:NOFLY()
 	fly.isFlying = false
 	fly.FLYING = false
+	if game.Players.LocalPlayer.Character then
+		if game.Players.LocalPlayer.Character:FindFirstChild"Float" then
+			game.Players.LocalPlayer.Character:FindFirstChild"Float":Destroy()
+		end
+	end
 end
 
 function fly:startflying()
@@ -111,30 +118,5 @@ function fly:startflying()
 	Float.Anchored = true
 end
 
-local W, onlyonce = Instance.new("Part", workspace)
-W.Size = Vector3.new(5, 2, 5)
-W.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
-W.Transparency = 1
-W.Anchored = true
-W.Name = "LOWL"
-game:GetService"RunService":BindToRenderStep("", 0, function()
-	if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild"Humanoid" then return end
-	if fly.isFlying and LocalPlayer.Character and LocalPlayer.Character.HumanoidRootPart then
-		if W:IsDescendantOf(workspace) then
-			pcall(function()
-				W.CanCollide = true
-				W.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
-			end)
-			onlyonce = true
-		elseif onlyonce then
-			onlyonce = false
-			W = Instance.new("Part", workspace)
-			W.Size = Vector3.new(5, 2, 5)
-			W.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
-			W.Transparency = 1
-			W.Anchored = true
-			W.Name = "LOWL"
-		end
-	else W.CanCollide = false end
-end)
+game:GetService"Players".LocalPlayer.CharacterRemoving:Connect(function() fly:NOFLY() end)
 return fly
