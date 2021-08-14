@@ -5,11 +5,12 @@ IrisNotificationMrJack(1, "Notification", "Checking Servers!", 9e9)
 local maxplayers = math.huge
 local goodserver
 local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+if not _G.FailedServerID then _G.FailedServerID = {} end
 
 function serversearch()
 	for _, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink)).data) do
 		pcall(function()
-			if type(v) == "table" and tonumber(maxplayers) > tonumber(v.playing) then
+			if type(v) == "table" and tonumber(maxplayers) > tonumber(v.playing) and not table.find(_G.FailedServerID, v.id) then
 				maxplayers = v.playing
 				goodserver = v.id
 			end
@@ -39,5 +40,6 @@ if goodserver == game.JobId or maxplayers == #game:GetService"Players":GetChildr
 	return IrisNotificationMrJack(1, "Notification", "Your current server is the most empty server atm", 2)
 end
 IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
+table.insert(_G.FailedServerID, goodserver)
 game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
 return true
