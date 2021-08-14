@@ -262,13 +262,15 @@ NotificationTable.InsertNotification = function(Notification, Duration, Retracti
 	local Tween = TweenService:Create(Notification, TweenInfData, { Position = HidePosition })
 	Tween.Completed:Connect(function(State)
 		if State == Enum.PlaybackState.Completed then
-			Notification.Parent:Destroy()
-			for _, NotificationObject in next, NotificationFolder:GetChildren() do
-				local Notification = NotificationObject["_Template"]
-				TweenService:Create(Notification, TweenInfo.new(0.25), {
-					Position = UDim2.new(1, -280, 1, Notification.Position.Y.Offset + 70)
-				}):Play()
-			end
+			pcall(function()
+				Notification.Parent:Destroy()
+				for _, NotificationObject in next, NotificationFolder:GetChildren() do
+					local Notification = NotificationObject["_Template"]
+					TweenService:Create(Notification, TweenInfo.new(0.25), {
+						Position = UDim2.new(1, -280, 1, Notification.Position.Y.Offset + 70)
+					}):Play()
+				end
+			end)
 			Done = true
 		end
 	end)
