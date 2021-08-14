@@ -1,5 +1,5 @@
 local cient, shit, currentemote = game.Players.LocalPlayer, {
-	animations = {
+	list = {
 		"Astronaut",
 		"Bubbly",
 		"Cartoony",
@@ -26,6 +26,7 @@ local cient, shit, currentemote = game.Players.LocalPlayer, {
 		"Zombie"
 	},
 	checkanimationsshit = {
+		["idle"] = "Animation",
 		["idle"] = "Animation2",
 		["run"] = "RunAnim",
 		["walk"] = "WalkAnim",
@@ -340,5 +341,5 @@ function shit:playanimation(name)
 	end
 end
 
-table.sort(shit.checkanimationsshit)
+table.sort(shit.list)
 return shit
