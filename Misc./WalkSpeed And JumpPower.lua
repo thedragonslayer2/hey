@@ -1,9 +1,4 @@
-local client, shit = game:GetService"Players".LocalPlayer, {
-	WalkSpeed = false,
-	WalkSpeedValue = nil,
-	JumpPower = false,
-	JumpPowerValue = nil
-}
+local client, shit = game:GetService"Players".LocalPlayer, { WalkSpeedValue = nil, JumpPowerValue = nil }
 if hookfunction then
 	local old
 	old = hookfunction(getrawmetatable(game).__newindex, function(t, k, v)
@@ -16,14 +11,10 @@ if hookfunction then
 	end)
 else
 	client:GetPropertyChangedSignal"WalkSpeed":Connect(function()
-		if shit.WalkSpeed then
-			client.Character.Humanoid.WalkSpeed = shit.WalkSpeedValue or client.Character.Humanoid.WalkSpeed
-		end
+		client.Character.Humanoid.WalkSpeed = shit.WalkSpeedValue or client.Character.Humanoid.WalkSpeed
 	end)
 	client:GetPropertyChangedSignal"JumpPower":Connect(function()
-		if shit.JumpPower then
-			client.Character.Humanoid.JumpPower = shit.JumpPowerValue or client.Character.Humanoid.JumpPower
-		end
+		client.Character.Humanoid.JumpPower = shit.JumpPowerValue or client.Character.Humanoid.JumpPower
 	end)
 end
 return shit
