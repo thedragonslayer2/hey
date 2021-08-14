@@ -46,7 +46,7 @@ cient.CharacterAdded:Connect(function()
 	if currentemote then currentemote() end
 end)
 
-function shit:playanimation(name)
+function shit:Play(name)
 	if name == "Astronaut" then
 		currentemote = function()
 			game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId = "rbxassetid://891621366"
