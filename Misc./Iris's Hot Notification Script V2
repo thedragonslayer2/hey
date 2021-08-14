@@ -161,6 +161,8 @@ NotificationTable.CreateNotification = function(TitleData, Text, Image, Settings
 		end
 	end
 	local Notification = Instance.new"ScreenGui"
+	if syn and syn.protect_gui then syn.protect_gui(Notification)
+	elseif get_hidden_gui then get_hidden_gui(Notification) end
 	local _Template = Instance.new"Frame"
 	local Icon = Instance.new"ImageLabel"
 	local UIAspectRatioConstraint = Instance.new"UIAspectRatioConstraint"
@@ -345,6 +347,8 @@ NotificationTable.CreateWallNotification = function(TitleText, DescriptionText, 
 		end
 	end
 	local WallNotification = Instance.new"ScreenGui"
+	if syn and syn.protect_gui then syn.protect_gui(WallNotification)
+	elseif get_hidden_gui then get_hidden_gui(WallNotification) end
 	local Main = Instance.new"Frame"
 	local Title = Instance.new"TextLabel"
 	local Description = Instance.new"TextLabel"
