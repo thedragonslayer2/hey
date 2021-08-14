@@ -431,7 +431,6 @@ NotificationTable.WallNotification = function(...)
 end
 NotificationTable.ClearAllNotifications = function()
 	local lol = { game:GetService"CoreGui".RobloxGui:GetChildren(), game:GetService"Players".LocalPlayer.PlayerGui:GetChildren() }
-	repeat wait() until Done
 	for i, v in next, lol do
 		for _, gui in next, v do
 			if gui:IsA"Folder" then
