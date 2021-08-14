@@ -26,22 +26,25 @@ client.DevCameraOcclusionMode = "Invisicam"
 client.CameraMaxZoomDistance = 1e4
 if hookfunction and getrawmetatable and setreadonly then
 	setreadonly(getrawmetatable(game), false)
-	if client.DevCameraOcclusionMode ~= "Invisicam" then
-		local yeahidkman
-		yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
-			if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam" end
-			return yeahidkman(Self, Index, Value)
-		end)
-		client.DevCameraOcclusionMode = "Invisicam"
-	end
-	if client.CameraMaxZoomDistance ~= 1e4 then
-		local yeahidkman
-		yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
-			if Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
-			return yeahidkman(Self, Index, Value)
-		end)
-		client.CameraMaxZoomDistance = 1e4
-	end
+	spawn(function()
+		wait(1)
+		if client.DevCameraOcclusionMode ~= "Invisicam" then
+			local yeahidkman
+			yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
+				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam" end
+				return yeahidkman(Self, Index, Value)
+			end)
+			client.DevCameraOcclusionMode = "Invisicam"
+		end
+		if client.CameraMaxZoomDistance ~= 1e4 then
+			local yeahidkman
+			yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
+				if Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
+				return yeahidkman(Self, Index, Value)
+			end)
+			client.CameraMaxZoomDistance = 1e4
+		end
+	end)
 	-- anti kick
 	local oldkick
 	oldkick = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
