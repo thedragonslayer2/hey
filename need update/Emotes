@@ -1,78 +1,109 @@
-
-local emotes = {
-    ["Dophin Dance"] = 5918726674,
-    ["Applaud"] = 5915693819,
-    ["Country Line  Dance"] = 5915712534,
-    ["Floss  Dance"] = 5917459365,
-    ["Panini Dance"] = 5915713518,
-    ["Rock On"] = 5915714366,
-    ["Rodeo Dance"] = 5918728267,
-    ["Break Dance"] = 5915648917,
-    ["High Wave"] = 5915690960,
-    ["Holiday Dance"] = 5937558680,
-    ["Old Town Road Dance"] = 5937560570,
-    ["Around Town"] = 3303391864,
-    ["Top Rock"] = 3361276673,
-    ["Fashionable"] = 3333331310,
-    ["Robot"] = 3338025566,
-    ["Twirl"] = 3334968680,
-    ["Jacks"] = 3338066331,
-    ["T"] = 3338010159,
-    ["Shy"] = 3337978742,
-    ["Monkey"] = 3333499508,
-    ["Borock's Rage"] = 3236842542,
-    ["Ud'zal's Summoning"] = 3303161675,
-    ["Hype Dance"] = 3695333486,
-    ["Godlike"] = 3337994105,
-    ["Swoosh"] = 3361481910,
-    ["Sneaky"] = 3334424322,
-    ["Side to Side"] = 3333136415,
-    ["Greatest"] = 3338042785,
-    ["Louder"] = 3338083565,
-    ["Beckon"] = 5230598276,
-    ["Bored"] = 5230599789,
-    ["Cower"] = 4940563117,
-    ["Tantrum"] = 5104341999,
-    ["Hero Landing"] = 5104344710,
-    ["Confused"] = 4940561610,
-    ["Jumping Wave"] = 4940564896,
-    ["Keeping Time"] = 4555808220,
-    ["Agree"] = 4841397952,
-    ["Power Blast"] = 4841403964,
-    ["Disagree"] = 4841401869,
-    ["Sleep"] = 4686925579,
-    ["Sad"] = 4841407203,
-    ["Happy"] = 4841405708,
-    ["Chicken Dance"] = 4841399916,
-    ["Bunny Hop"] = 4641985101,
-    ["Air Dance"] = 4555782893,
-    ["Curtsy"] = 4555816777,
-    ["Zombie"] = 4210116953,
-    ["Fast Hands"] = 4265701731,
-    ["Baby Dance"] = 4265725525,
-    ["Celebrate"] = 3338097973,
-    ["Fancy Feet"] = 3333432454,
-    ["Y"] = 4349285876,
-    ["Shuffle"] = 4349242221,
-    ["Bodybuilder"] = 3333387824,
-    ["Sandwich Dance"] = 4406555273,
-    ["Dorky Dance"] = 4212455378,
-    ["Heisman Pose"] = 3695263073,
-    ["Superhero Reveal"] = 3695373233,
-    ["Dizzy"] = 3361426436,
-    ["Get Out"] = 3333272779,
-    ["Fishing"] = 3334832150,
-    ["Tree"] = 4049551434,
-    ["Line Dance"] = 4049037604,
-    ["Idol"] = 4101966434,
-    ["Haha"] = 3337966527,
-    ["Salute"] = 3333474484,
-    ["Hello"] = 3344650532,
-    ["Air Guitar"] = 3695300085,
-    ["Cha Cha"] = 3695322025,
-    ["Shrug"] = 3334392772,
-    ["Point2"] = 3344585679,
-    ["Tilt"] = 3334538554,
-    ["Stadium"] = 3338055167
+local emotes, currentemote = {
+	speed = 1,
+	check = {
+		["5918726674"] = "Dophin Dance",
+		["5915693819"] = "Applaud",
+		["5915712534"] = "Country Line  Dance",
+		["5917459365"] = "Floss  Dance",
+		["5915713518"] = "Panini Dance",
+		["5915714366"] = "Rock On",
+		["5918728267"] = "Rodeo Dance",
+		["5915648917"] = "Break Dance",
+		["5915690960"] = "High Wave",
+		["5937558680"] = "Holiday Dance",
+		["5937560570"] = "Old Town Road Dance",
+		["3303391864"] = "Around Town",
+		["3361276673"] = "Top Rock",
+		["3333331310"] = "Fashionable",
+		["3338025566"] = "Robot",
+		["3334968680"] = "Twirl",
+		["3338066331"] = "Jacks",
+		["3338010159"] = "T",
+		["3337978742"] = "Shy",
+		["3333499508"] = "Monkey",
+		["3236842542"] = "Borock's Rage",
+		["3303161675"] = "Ud'zal's Summoning",
+		["3695333486"] = "Hype Dance",
+		["3337994105"] = "Godlike",
+		["3361481910"] = "Swoosh",
+		["3334424322"] = "Sneaky",
+		["3333136415"] = "Side to Side",
+		["3338042785"] = "Greatest",
+		["3338083565"] = "Louder",
+		["5230598276"] = "Beckon",
+		["5230599789"] = "Bored",
+		["4940563117"] = "Cower",
+		["5104341999"] = "Tantrum",
+		["5104344710"] = "Hero Landing",
+		["4940561610"] = "Confused",
+		["4940564896"] = "Jumping Wave",
+		["4555808220"] = "Keeping Time",
+		["4841397952"] = "Agree",
+		["4841403964"] = "Power Blast",
+		["4841401869"] = "Disagree",
+		["4686925579"] = "Sleep",
+		["4841407203"] = "Sad",
+		["4841405708"] = "Happy",
+		["4841399916"] = "Chicken Dance",
+		["4641985101"] = "Bunny Hop",
+		["4555782893"] = "Air Dance",
+		["4555816777"] = "Curtsy",
+		["4210116953"] = "Zombie",
+		["4265701731"] = "Fast Hands",
+		["4265725525"] = "Baby Dance",
+		["3338097973"] = "Celebrate",
+		["3333432454"] = "Fancy Feet",
+		["4349285876"] = "Y",
+		["4349242221"] = "Shuffle",
+		["3333387824"] = "Bodybuilder",
+		["4406555273"] = "Sandwich Dance",
+		["4212455378"] = "Dorky Dance",
+		["3695263073"] = "Heisman Pose",
+		["3695373233"] = "Superhero Reveal",
+		["3361426436"] = "Dizzy",
+		["3333272779"] = "Get Out",
+		["3334832150"] = "Fishing",
+		["4049551434"] = "Tree",
+		["4049037604"] = "Line Dance",
+		["4101966434"] = "Idol",
+		["3337966527"] = "Haha",
+		["3333474484"] = "Salute",
+		["3344650532"] = "Hello",
+		["3695300085"] = "Air Guitar",
+		["3695322025"] = "Cha Cha",
+		["3334392772"] = "Shrug",
+		["3344585679"] = "Point2",
+		["3334538554"] = "Tilt",
+		["3338055167"] = "Stadium"
+	},
+	list = {}
 }
+for i, v in next, emotes.check do table.insert(emotes.list, v) end
+table.sort(emotes.list)
+
+function emotes:Play(Name)
+	for i, v in pairs(emotes.check) do
+		if Name == v then
+			if currentemote ~= nil then currentemote:Stop() end
+			local Anim = Instance.new"Animation"
+			Anim.AnimationId = "rbxassetid://" .. tonumber(i)
+			currentemote = game:GetService"Players".LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+			currentemote:Play(0)
+			currentemote:AdjustSpeed(emotes.speed)
+			game:GetService"Players".LocalPlayer.Character.Animate.Disabled = true
+			game:GetService"Players".LocalPlayer.Character.Humanoid.Running:connect(function(speed)
+				if speed > 0 then
+					game:GetService"Players".LocalPlayer.Character.Animate.Disabled = false
+					currentemote:Stop(0)
+				end
+			end)
+		end
+	end
+end
+
+function emotes:ChangeSpeed(speed)
+	if currentemote ~= nil then currentemote:AdjustSpeed(speed) end
+	emotes.speed = speed
+end
+
 return emotes
