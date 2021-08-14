@@ -1,49 +1,51 @@
-local cient = game.Players.LocalPlayer
-local animate = cient.Character:FindFirstChild"Animate"
-local animations, checkanimationsshit, currentemote = {
-	"Astronaut",
-	"Bubbly",
-	"Cartoony",
-	"Confident",
-	"Cowboy",
-	"Elder",
-	"Knight",
-	"Levitation",
-	"Mage",
-	"Ninja",
-	"OldSchool",
-	"Patrol",
-	"Pirate",
-	"Popstar",
-	"Princess",
-	"R15",
-	"Robot",
-	"Sneaky",
-	"Stylish",
-	"Superhero",
-	"Toy",
-	"Vampire",
-	"Werewolf",
-	"Zombie"
-}, {
-	["idle"] = "Animation1",
-	["idle"] = "Animation2",
-	["run"] = "RunAnim",
-	["walk"] = "WalkAnim",
-	["jump"] = "JumpAnim",
-	["climb"] = "ClimbAnim",
-	["fall"] = "FallAnim",
-	["swim"] = "Swim",
-	["swimidle"] = "SwimIdle"
+local cient, shit, currentemote = game.Players.LocalPlayer, {
+	animations = {
+		"Astronaut",
+		"Bubbly",
+		"Cartoony",
+		"Confident",
+		"Cowboy",
+		"Elder",
+		"Knight",
+		"Levitation",
+		"Mage",
+		"Ninja",
+		"OldSchool",
+		"Patrol",
+		"Pirate",
+		"Popstar",
+		"Princess",
+		"R15",
+		"Robot",
+		"Sneaky",
+		"Stylish",
+		"Superhero",
+		"Toy",
+		"Vampire",
+		"Werewolf",
+		"Zombie"
+	},
+	checkanimationsshit = {
+		["idle"] = "Animation2",
+		["run"] = "RunAnim",
+		["walk"] = "WalkAnim",
+		["jump"] = "JumpAnim",
+		["climb"] = "ClimbAnim",
+		["fall"] = "FallAnim",
+		["swim"] = "Swim",
+		["swimidle"] = "SwimIdle"
+	}
 }
+local animate = cient.Character:FindFirstChild"Animate"
 cient.CharacterAdded:Connect(function()
 	repeat wait() until cient.Character and animate
-	for i, v in next, checkanimationsshit do
+	for i, v in next, shit.checkanimationsshit do
 		repeat wait() until animate:FindFirstChild(i) and animate[i]:FindFirstChild(v)
 	end
 	if currentemote then currentemote() end
 end)
-local playanimation = function(name)
+
+function shit:playanimation(name)
 	if name == "Astronaut" then
 		currentemote = function()
 			game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId = "rbxassetid://891621366"
@@ -332,7 +334,10 @@ local playanimation = function(name)
 			game.Players.LocalPlayer.Character.Animate.swimidle.SwimIdle.AnimationId = "rbxassetid://616166655"
 		end
 	end
-	currentemote()
-	IrisNotificationMrJack(1, "Animation", tostring(name), 1)
+	if currentemote then
+		currentemote()
+		IrisNotificationMrJack(1, "Animation", tostring(name), 1)
+	end
 end
-return animations, playanimation
+
+return shit
