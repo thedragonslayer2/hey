@@ -1,21 +1,6 @@
 -- anti afk and more
 local players = game:GetService"Players"
 local client = players.LocalPlayer
-if hookfunction and getrawmetatable and setreadonly then
-	setreadonly(getrawmetatable(game), false)
-	-- anti kick
-	local oldkick
-	oldkick = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
-		if not checkcaller() then
-			local method = tostring(getnamecallmethod())
-			if method == "Kick" or method == "kick" then
-				warn"Game Tried To Kick You!"
-				return wait(math.huge)
-			end
-		end
-		return oldkick(Self, ...)
-	end)
-end
 -- anti afk
 if getconnections then
 	for i, v in next, getconnections(client.Idled) do v:Disable() end
@@ -39,4 +24,32 @@ client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() clien
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
 client.DevCameraOcclusionMode = "Invisicam"
 client.CameraMaxZoomDistance = 1e4
+if hookfunction and getrawmetatable and setreadonly then
+	setreadonly(getrawmetatable(game), false)
+	if client.DevCameraOcclusionMode ~= "Invisicam" then
+		local yeahidkman
+		yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
+			if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam" end
+			return yeahidkman(Self, Index, Value)
+		end)
+		client.DevCameraOcclusionMode = "Invisicam"
+	end
+	if client.CameraMaxZoomDistance ~= 1e4 then
+		local yeahidkman
+		yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
+			if Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
+			return yeahidkman(Self, Index, Value)
+		end)
+		client.CameraMaxZoomDistance = 1e4
+	end
+	-- anti kick
+	local oldkick
+	oldkick = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
+		if not checkcaller() and getnamecallmethod():lower() == "kick" then
+			warn"Game Tried To Kick You!"
+			return wait(math.huge)
+		end
+		return oldkick(Self, ...)
+	end)
+end
 return warn"ANTI AFK ACTIVATED!"
