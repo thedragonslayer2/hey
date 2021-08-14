@@ -340,4 +340,5 @@ function shit:playanimation(name)
 	end
 end
 
+table.sort(shit.checkanimationsshit)
 return shit
