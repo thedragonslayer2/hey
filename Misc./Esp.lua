@@ -1,15 +1,13 @@
 local shit = { enabled = false, Color = Color3.new(1, 0, 0) }
 
-function isnil(thing) return thing == nil end
-
 local function round(n) return math.floor(tonumber(n) + 0.5) end
 
 function UpdatePlayerChams()
-	for i, v in pairs(game:GetService"Players":GetChildren()) do
+	for i, v in next, game:GetService"Players":GetChildren() do
 		pcall(function()
-			if game:GetService"Players".LocalPlayer ~= v.Name then
-				if not isnil(v.Character) then
-					if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild"NameEsp" and shit.enabled then
+			if game:GetService"Players".LocalPlayer ~= v then
+				if v.Character then
+					if v.Character:FindFirstChild"Head" and not v.Character.Head:FindFirstChild"NameEsp" and shit.enabled then
 						local bill = Instance.new("BillboardGui", v.Character.Head)
 						bill.Name = "NameEsp"
 						bill.Size = UDim2.new(1, 200, 1, 30)
