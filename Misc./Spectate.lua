@@ -1,4 +1,4 @@
-local bruh = { toggle = false, CurrentPlayerIndex = 1, CurrentPlayer = nil }
+local bruh = { CurrentPlayerIndex = 1, CurrentPlayer = nil }
 
 local function ChangeCameraSubject(Player)
 	if Player then
@@ -9,18 +9,16 @@ local function ChangeCameraSubject(Player)
 end
 
 game:GetService"RunService".Heartbeat:Connect(function()
-	if bruh.toggle then
-		local PlayersChildren = game:GetService"Players":GetChildren()
-		if bruh.CurrentPlayerIndex <= 1 then
-			workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
-			bruh.CurrentPlayer = game:GetService"Players".LocalPlayer
-			ChangeCameraSubject(game:GetService"Players".LocalPlayer)
-		elseif bruh.toggle and bruh.CurrentPlayerIndex >= 2 and PlayersChildren[bruh.CurrentPlayerIndex] then
-			ChangeCameraSubject(PlayersChildren[bruh.CurrentPlayerIndex])
-		else
-			bruh.CurrentPlayerIndex = 1
-			bruh.CurrentPlayer = game:GetService"Players".LocalPlayer
-		end
+	local PlayersChildren = game:GetService"Players":GetChildren()
+	if bruh.CurrentPlayerIndex <= 1 then
+		workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+		bruh.CurrentPlayer = game:GetService"Players".LocalPlayer
+		ChangeCameraSubject(game:GetService"Players".LocalPlayer)
+	elseif bruh.CurrentPlayerIndex >= 2 and PlayersChildren[bruh.CurrentPlayerIndex] then
+		ChangeCameraSubject(PlayersChildren[bruh.CurrentPlayerIndex])
+	else
+		bruh.CurrentPlayerIndex = 1
+		bruh.CurrentPlayer = game:GetService"Players".LocalPlayer
 	end
 end)
 
