@@ -1,6 +1,6 @@
 -- anti afk and more
 local players = game:GetService"Players"
-local client = players.LocalPlayer
+local client = game:GetService"Players".LocalPlayer
 -- anti afk
 if getconnections then
 	for i, v in next, getconnections(client.Idled) do v:Disable() end
@@ -30,7 +30,7 @@ if hookfunction and getrawmetatable and setreadonly then
 		wait(1)
 		if client.DevCameraOcclusionMode ~= "Invisicam" then
 			local yeahidkman
-			yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
+			yeahidkman = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
 				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam" end
 				return yeahidkman(Self, Index, Value)
 			end)
@@ -38,7 +38,7 @@ if hookfunction and getrawmetatable and setreadonly then
 		end
 		if client.CameraMaxZoomDistance ~= 1e4 then
 			local yeahidkman
-			yeahidkman = hookfunction(getrawmetatable(game).__newindex, function(Self, Index, Value)
+			yeahidkman = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
 				if Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
 				return yeahidkman(Self, Index, Value)
 			end)
@@ -46,13 +46,18 @@ if hookfunction and getrawmetatable and setreadonly then
 		end
 	end)
 	-- anti kick
-	local oldkick
-	oldkick = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
-		if not checkcaller() and getnamecallmethod():lower() == "kick" then
-			warn"Game Tried To Kick You!"
-			return wait(math.huge)
-		end
-		return oldkick(Self, ...)
-	end)
+	if not table.find({ "5343994291" }, tostring(game:GetService"AssetService":GetGamePlacesAsync():GetCurrentPage()[1].PlaceId)) then
+		local oldkick
+		oldkick = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
+			if not checkcaller() then
+				local method = getnamecallmethod()
+				if method:lower() == "kick" then
+					warn"Game Tried To Kick You!"
+					return wait(math.huge)
+				end
+			end
+			return oldkick(Self, ...)
+		end)
+	end
 end
 return warn"ANTI AFK ACTIVATED!"
