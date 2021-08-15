@@ -88,6 +88,13 @@ if hookfunction and getrawmetatable and setreadonly then
 		end
 		return BadgeService(Self, ...)
 	end)
+	local client_namecall
+	client_namecall = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
+		local method = getnamecallmethod()
+		if method == "IsInGroup" then return true
+		elseif method == "GetRankInGroup" then return 255 end
+		return client_namecall(Self, ...)
+	end)
 end
 -- anti afk
 if getconnections then
