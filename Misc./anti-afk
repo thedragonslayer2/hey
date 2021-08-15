@@ -18,21 +18,15 @@ if hookfunction and getrawmetatable then
 	pcall(function() setreadonly(getrawmetatable(game), false) end)
 	spawn(function()
 		wait(1)
-		if client.DevCameraOcclusionMode ~= "Invisicam" then
+		if client.DevCameraOcclusionMode ~= "Invisicam" or client.CameraMaxZoomDistance ~= 1e4 then
 			local yeahidkman
 			yeahidkman = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
-				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam" end
-				return yeahidkman(Self, Index, Value)
-			end)
-			client.DevCameraOcclusionMode = "Invisicam"
-		end
-		if client.CameraMaxZoomDistance ~= 1e4 then
-			local yeahidkman
-			yeahidkman = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
-				if Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
+				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam"
+				elseif Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
 				return yeahidkman(Self, Index, Value)
 			end)
 			client.CameraMaxZoomDistance = 1e4
+			client.DevCameraOcclusionMode = "Invisicam"
 		end
 	end)
 	local synapse, shithttp = syn and syn.request, http and http.request
@@ -48,40 +42,34 @@ if hookfunction and getrawmetatable then
 	end)
 	local acc_spoof
 	acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
-		if Index == "AccountAge" then return tonumber"99999"
-		elseif Index == "MembershipType" then return Enum.MembershipType.Premium end
+		if Index == "AccountAge" and Self == client then return tonumber"99999"
+		elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
 		return acc_spoof(Self, Index)
 	end)
 	if not checkplaceId then
 		local client_namecall
-		client_namecall = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
+		client_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
 			local method = getnamecallmethod()
-			if method == "IsInGroup" then return true
-			elseif method == "GetRankInGroup" then return 255 end
+			if method == "IsInGroup" and Self == client then return true
+			elseif method == "GetRankInGroup" and Self == client then return 255 end
 			-- anti kick
-			if method:lower() == "kick" and not checkcaller() then
+			if method:lower() == "kick" and Self == client and not checkcaller() then
 				warn"Game Tried To Kick You!"
 				return wait(math.huge)
 			end
 			return client_namecall(Self, ...)
 		end)
-		local MarketplaceService
-		MarketplaceService = hookfunction(getrawmetatable(game:GetService"MarketplaceService").__namecall, function(Self, ...)
-			local method = tostring(getnamecallmethod())
-			if table.find({ "UserOwnsGamePassAsync", "PlayerOwnsAsset" }, method) then return true end
-			return MarketplaceService(Self, ...)
-		end)
-		local GamePassService
-		GamePassService = hookfunction(getrawmetatable(game:GetService"GamePassService").__namecall, function(Self, ...)
-			local method = tostring(getnamecallmethod())
-			if table.find({ "PlayerHasPass" }, method) then return true end
-			return GamePassService(Self, ...)
-		end)
-		local BadgeService
-		BadgeService = hookfunction(getrawmetatable(game:GetService"BadgeService").__namecall, function(Self, ...)
-			local method = tostring(getnamecallmethod())
-			if table.find({ "UserHasBadge", "UserHasBadgeAsync" }, method) then return true end
-			return BadgeService(Self, ...)
+		local damnit_all_fuck
+		damnit_all_fuck = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
+			local method = getnamecallmethod()
+			if table.find({
+				"UserOwnsGamePassAsync",
+				"PlayerOwnsAsset",
+				"PlayerHasPass",
+				"UserHasBadge",
+				"UserHasBadgeAsync"
+			}, method) then return true end
+			return damnit_all_fuck(Self, ...)
 		end)
 	end
 end
