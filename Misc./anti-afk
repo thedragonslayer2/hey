@@ -1,4 +1,3 @@
--- anti afk and more
 repeat wait() until game:IsLoaded()
 local players = game:GetService"Players"
 local client = game:GetService"Players".LocalPlayer
@@ -28,18 +27,23 @@ if hookfunction and getrawmetatable and setreadonly then
 			client.CameraMaxZoomDistance = 1e4
 		end
 	end)
-	-- anti kick
 	if not table.find({ "5343994291" }, tostring(game:GetService"AssetService":GetGamePlacesAsync():GetCurrentPage()[1].PlaceId)) then
-		local oldkick
-		oldkick = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
-			if not checkcaller() then
-				local method = getnamecallmethod()
-				if method:lower() == "kick" then
-					warn"Game Tried To Kick You!"
-					return wait(math.huge)
-				end
+		local client_namecall
+		client_namecall = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
+			local method = getnamecallmethod()
+			if method == "IsInGroup" then
+				warn(method, Self, ...)
+				return true
+			elseif method == "GetRankInGroup" then
+				warn(method, Self, ...)
+				return 255
 			end
-			return oldkick(Self, ...)
+			-- anti kick
+			if method:lower() == "kick" and not checkcaller() then
+				warn"Game Tried To Kick You!"
+				return wait(math.huge)
+			end
+			return client_namecall(Self, ...)
 		end)
 	end
 	-- anti webhook
@@ -57,8 +61,13 @@ if hookfunction and getrawmetatable and setreadonly then
 	-- some stuff
 	local acc_spoof
 	acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
-		if Index == "AccountAge" then return tonumber"99999"
-		elseif Index == "MembershipType" then return Enum.MembershipType.Premium end
+		if Index == "AccountAge" then
+			warn(Index, Self, Index)
+			return tonumber"99999"
+		elseif Index == "MembershipType" then
+			warn(Index, Self, Index)
+			return Enum.MembershipType.Premium
+		end
 		return acc_spoof(Self, Index)
 	end)
 	local MarketplaceService
@@ -87,13 +96,6 @@ if hookfunction and getrawmetatable and setreadonly then
 			return true
 		end
 		return BadgeService(Self, ...)
-	end)
-	local client_namecall
-	client_namecall = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
-		local method = getnamecallmethod()
-		if method == "IsInGroup" then return true
-		elseif method == "GetRankInGroup" then return 255 end
-		return client_namecall(Self, ...)
 	end)
 end
 -- anti afk
