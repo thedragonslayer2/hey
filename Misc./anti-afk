@@ -1,6 +1,14 @@
 repeat wait() until game:IsLoaded()
 local players = game:GetService"Players"
 local client = game:GetService"Players".LocalPlayer
+local pages, checkplaceId = game:GetService"AssetService":GetGamePlacesAsync()
+while wait() do
+	for i, place in pairs(pages:GetCurrentPage()) do
+		if table.find({ "5343994291" }, tostring(place.PlaceId)) then checkplaceId = true end
+	end
+	if pages.IsFinished then break end
+	pages:AdvanceToNextPageAsync()
+end
 -- invisicam
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
@@ -27,26 +35,6 @@ if hookfunction and getrawmetatable then
 			client.CameraMaxZoomDistance = 1e4
 		end
 	end)
-	if not table.find({ "5343994291" }, tostring(game:GetService"AssetService":GetGamePlacesAsync():GetCurrentPage()[1].PlaceId)) then
-		local client_namecall
-		client_namecall = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
-			local method = getnamecallmethod()
-			if method == "IsInGroup" then
-				warn(method, Self, ...)
-				return true
-			elseif method == "GetRankInGroup" then
-				warn(method, Self, ...)
-				return 255
-			end
-			-- anti kick
-			if method:lower() == "kick" and not checkcaller() then
-				warn"Game Tried To Kick You!"
-				return wait(math.huge)
-			end
-			return client_namecall(Self, ...)
-		end)
-	end
-	-- anti webhook
 	local synapse, shithttp = syn and syn.request, http and http.request
 	local request = http_request or request or HttpPost or synapse or shithttp
 	local anti_webhook
@@ -58,45 +46,44 @@ if hookfunction and getrawmetatable then
 		end
 		return anti_webhook(self)
 	end)
-	-- some stuff
 	local acc_spoof
 	acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
-		if Index == "AccountAge" then
-			warn(Index, Self, Index)
-			return tonumber"99999"
-		elseif Index == "MembershipType" then
-			warn(Index, Self, Index)
-			return Enum.MembershipType.Premium
-		end
+		if Index == "AccountAge" then return tonumber"99999"
+		elseif Index == "MembershipType" then return Enum.MembershipType.Premium end
 		return acc_spoof(Self, Index)
 	end)
-	local MarketplaceService
-	MarketplaceService = hookfunction(getrawmetatable(game:GetService"MarketplaceService").__namecall, function(Self, ...)
-		local method = tostring(getnamecallmethod())
-		if table.find({ "UserOwnsGamePassAsync", "PlayerOwnsAsset" }, method) then
-			warn(method, Self, ...)
-			return true
-		end
-		return MarketplaceService(Self, ...)
-	end)
-	local GamePassService
-	GamePassService = hookfunction(getrawmetatable(game:GetService"GamePassService").__namecall, function(Self, ...)
-		local method = tostring(getnamecallmethod())
-		if table.find({ "PlayerHasPass" }, method) then
-			warn(method, Self, ...)
-			return true
-		end
-		return GamePassService(Self, ...)
-	end)
-	local BadgeService
-	BadgeService = hookfunction(getrawmetatable(game:GetService"BadgeService").__namecall, function(Self, ...)
-		local method = tostring(getnamecallmethod())
-		if table.find({ "UserHasBadge", "UserHasBadgeAsync" }, method) then
-			warn(method, Self, ...)
-			return true
-		end
-		return BadgeService(Self, ...)
-	end)
+	if not checkplaceId then
+		local client_namecall
+		client_namecall = hookfunction(getrawmetatable(client).__namecall, function(Self, ...)
+			local method = getnamecallmethod()
+			if method == "IsInGroup" then return true
+			elseif method == "GetRankInGroup" then return 255 end
+			-- anti kick
+			if method:lower() == "kick" and not checkcaller() then
+				warn"Game Tried To Kick You!"
+				return wait(math.huge)
+			end
+			return client_namecall(Self, ...)
+		end)
+		local MarketplaceService
+		MarketplaceService = hookfunction(getrawmetatable(game:GetService"MarketplaceService").__namecall, function(Self, ...)
+			local method = tostring(getnamecallmethod())
+			if table.find({ "UserOwnsGamePassAsync", "PlayerOwnsAsset" }, method) then return true end
+			return MarketplaceService(Self, ...)
+		end)
+		local GamePassService
+		GamePassService = hookfunction(getrawmetatable(game:GetService"GamePassService").__namecall, function(Self, ...)
+			local method = tostring(getnamecallmethod())
+			if table.find({ "PlayerHasPass" }, method) then return true end
+			return GamePassService(Self, ...)
+		end)
+		local BadgeService
+		BadgeService = hookfunction(getrawmetatable(game:GetService"BadgeService").__namecall, function(Self, ...)
+			local method = tostring(getnamecallmethod())
+			if table.find({ "UserHasBadge", "UserHasBadgeAsync" }, method) then return true end
+			return BadgeService(Self, ...)
+		end)
+	end
 end
 -- anti afk
 if getconnections then
