@@ -6,8 +6,8 @@ client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() clien
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
 client.DevCameraOcclusionMode = "Invisicam"
 client.CameraMaxZoomDistance = 1e4
-if hookfunction and getrawmetatable and setreadonly then
-	setreadonly(getrawmetatable(game), false)
+if hookfunction and getrawmetatable then
+	pcall(function() setreadonly(getrawmetatable(game), false) end)
 	spawn(function()
 		wait(1)
 		if client.DevCameraOcclusionMode ~= "Invisicam" then
