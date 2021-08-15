@@ -51,25 +51,20 @@ if hookfunction and getrawmetatable then
 		client_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
 			local method = getnamecallmethod()
 			if method == "IsInGroup" and Self == client then return true
-			elseif method == "GetRankInGroup" and Self == client then return 255 end
-			-- anti kick
-			if method:lower() == "kick" and Self == client and not checkcaller() then
+			elseif method == "GetRankInGroup" and Self == client then
+				return 255
+				-- anti kick
+			elseif method:lower() == "kick" and Self == client and not checkcaller() then
 				warn"Game Tried To Kick You!"
 				return wait(math.huge)
-			end
-			return client_namecall(Self, ...)
-		end)
-		local damnit_all_fuck
-		damnit_all_fuck = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
-			local method = getnamecallmethod()
-			if table.find({
+			elseif table.find({
 				"UserOwnsGamePassAsync",
 				"PlayerOwnsAsset",
 				"PlayerHasPass",
 				"UserHasBadge",
 				"UserHasBadgeAsync"
 			}, method) then return true end
-			return damnit_all_fuck(Self, ...)
+			return client_namecall(Self, ...)
 		end)
 	end
 end
