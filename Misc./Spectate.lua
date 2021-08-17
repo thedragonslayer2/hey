@@ -58,7 +58,7 @@ function bruh:finplayer(target)
 	end
 end
 
-function bruh:goto()
+function bruh:TP()
 	for i, v in next, game:GetService"Players":GetChildren() do
 		if bruh.CurrentPlayer and client ~= v and bruh.CurrentPlayer == v.DisplayName and v.Character and v.Character:FindFirstChild"HumanoidRootPart" and client.Character and client.Character:FindFirstChild"HumanoidRootPart" then
 			game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
