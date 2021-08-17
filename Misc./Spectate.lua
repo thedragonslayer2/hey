@@ -5,8 +5,10 @@ local client, bruh = game:GetService"Players".LocalPlayer, { CurrentPlayerIndex 
 
 local function ChangeCameraSubject(Player)
 	if Player then
-		local Humanoid = Player.Character:FindFirstChildOfClass"Humanoid"
-		if Player.Character and Humanoid then workspace.CurrentCamera.CameraSubject = Humanoid end
+		pcall(function()
+			local Humanoid = Player.Character:FindFirstChildOfClass"Humanoid"
+			if Player.Character and Humanoid then workspace.CurrentCamera.CameraSubject = Humanoid end
+		end)
 		bruh.CurrentPlayer = Player
 	end
 end
