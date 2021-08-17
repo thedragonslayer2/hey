@@ -48,10 +48,10 @@ function bruh:finplayer(target)
 	if target ~= "" then
 		local yeahidk = tostring(target)
 		for i, v in pairs(game:GetService"Players":GetChildren()) do
-			if v.DisplayName:sub(1, #yeahidk):lower() == yeahidk:lower() or v.Name:sub(1, #yeahidk):lower() == yeahidk:lower() then
+			if v.DisplayName:sub(1, #yeahidk):lower() == yeahidk:lower() then
 				yeahidk = v
 				bruh.CurrentPlayerIndex = i
-				IrisNotificationMrJack(1, "Spectating", "DisplayName: " .. v.DisplayName, 1)
+				IrisNotificationMrJack(1, "Notification", "Now Spectating\n" .. v.DisplayName, 1)
 				return
 			end
 		end
