@@ -1,3 +1,6 @@
+if not IrisNotificationMrJack then
+	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
+elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 local bruh = { CurrentPlayerIndex = 1, CurrentPlayer = nil }
 
 local function ChangeCameraSubject(Player)
@@ -47,6 +50,7 @@ function bruh:finplayer(target)
 		if v.DisplayName:sub(1, #yeahidk):lower() == yeahidk:lower() or v.Name:sub(1, #yeahidk):lower() == yeahidk:lower() then
 			yeahidk = v
 			bruh.CurrentPlayerIndex = i
+			IrisNotificationMrJack(1, "Spectating", "DisplayName: " .. v.DisplayName, 1)
 			return
 		end
 	end
