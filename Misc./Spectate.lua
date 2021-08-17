@@ -1,7 +1,7 @@
 if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
-local bruh = { CurrentPlayerIndex = 1, CurrentPlayer = nil }
+local client, bruh = game:GetService"Players".LocalPlayer, { CurrentPlayerIndex = 1, CurrentPlayer = nil }
 
 local function ChangeCameraSubject(Player)
 	if Player then
@@ -47,13 +47,22 @@ end
 function bruh:finplayer(target)
 	if target ~= "" then
 		local yeahidk = tostring(target)
-		for i, v in pairs(game:GetService"Players":GetChildren()) do
+		for i, v in next, game:GetService"Players":GetChildren() do
 			if v.DisplayName:sub(1, #yeahidk):lower() == yeahidk:lower() then
 				yeahidk = v
 				bruh.CurrentPlayerIndex = i
 				IrisNotificationMrJack(1, "Notification", "Now Spectating\n" .. v.DisplayName, 1)
 				return
 			end
+		end
+	end
+end
+
+function bruh:goto()
+	for i, v in next, game:GetService"Players":GetChildren() do
+		if bruh.CurrentPlayer and client ~= v and bruh.CurrentPlayer == v.DisplayName and v.Character and v.Character:FindFirstChild"HumanoidRootPart" and client.Character and client.Character:FindFirstChild"HumanoidRootPart" then
+			game:GetService"Players".LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+			return
 		end
 	end
 end
