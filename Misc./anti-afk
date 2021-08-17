@@ -47,15 +47,14 @@ if hookfunction and getrawmetatable then
 		return acc_spoof(Self, Index)
 	end)
 	if not checkplaceId then
-		local client_namecall
-		client_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
+		local _namecall
+		_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
 			local method = getnamecallmethod()
 			if method == "IsInGroup" and Self == client then return true
 			elseif method == "GetRankInGroup" and Self == client then
 				return 255
 				-- anti kick
 			elseif method:lower() == "kick" and Self == client and not checkcaller() then
-				warn"Game Tried To Kick You!"
 				return wait(math.huge)
 			elseif table.find({
 				"UserOwnsGamePassAsync",
@@ -64,7 +63,7 @@ if hookfunction and getrawmetatable then
 				"UserHasBadge",
 				"UserHasBadgeAsync"
 			}, method) then return true end
-			return client_namecall(Self, ...)
+			return _namecall(Self, ...)
 		end)
 	end
 end
