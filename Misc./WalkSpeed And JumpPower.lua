@@ -2,9 +2,9 @@ local client, shit = game:GetService"Players".LocalPlayer, { WalkSpeedValue = ni
 if hookfunction then
 	local old
 	old = hookfunction(getrawmetatable(game).__newindex, function(t, k, v)
-		if t == client.Character.Humanoid and k == "WalkSpeed" then
+		if k == "WalkSpeed" and t == client.Character.Humanoid then
 			v = shit.WalkSpeedValue or client.Character.Humanoid.WalkSpeed
-		elseif t == client.Character.Humanoid and k == "JumpPower" then
+		elseif k == "JumpPower" and t == client.Character.Humanoid then
 			v = shit.JumpPowerValue or client.Character.Humanoid.JumpPower
 		end
 		return old(t, k, v)
@@ -20,12 +20,12 @@ end
 
 function shit:WS(Value)
 	shit.WalkSpeedValue = Value
-	pcall(function() client.Humanoid.WalkSpeed = Value end)
+	pcall(function() client.Character.Humanoid.WalkSpeed = Value end)
 end
 
 function shit:JP(Value)
 	shit.JumpPowerValue = Value
-	pcall(function() client.Humanoid.WalkSpeed = Value end)
+	pcall(function() client.Character.Humanoid.JumpPower = Value end)
 end
 
 return shit
