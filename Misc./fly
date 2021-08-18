@@ -1,3 +1,4 @@
+--version 1.1
 -- from rocky2u cmdscript
 -- i got this from fireztron's Era of Althea script
 local fly = { iyflyspeed = 1, isFlying = false, FLYING = false }
@@ -16,6 +17,9 @@ local lCONTROL = {
 	L = 0,
 	R = 0
 }
+game:GetService"RunService".Stepped:Connect(function()
+	if fly.isFlying then LocalPlayer.Character.Humanoid:ChangeState(11) end
+end)
 
 function fly:sFLY()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
@@ -118,5 +122,4 @@ function fly:startflying()
 	Float.Anchored = true
 end
 
-game:GetService"Players".LocalPlayer.CharacterRemoving:Connect(function() fly:NOFLY() end)
 return fly
