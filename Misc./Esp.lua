@@ -1,4 +1,4 @@
-local shit = { enabled = false, Color = Color3.new(1, 0, 0) }
+local shit = { enabled = false, health = false, Color = Color3.new(1, 0, 0) }
 
 local function round(n) return math.floor(tonumber(n) + 0.5) end
 
@@ -24,18 +24,34 @@ function UpdatePlayerChams()
 						name.TextColor3 = shit.Color
 						name.BackgroundTransparency = 1
 						if v.DisplayName == v.Name then
-							name.Text = v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							local yeah = v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							if shit.health then
+								yeah = yeah .. "\nHealth: " .. math.ceil(v.Character.Humanoid.Health)
+							end
+							name.Text = yeah
 						else
-							name.Text = v.DisplayName .. "\n" .. v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							local yeah = v.DisplayName .. "\n" .. v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							if shit.health then
+								yeah = yeah .. "\nHealth: " .. math.ceil(v.Character.Humanoid.Health)
+							end
+							name.Text = yeah
 						end
 					elseif shit.enabled and v.Character.Head:FindFirstChild"NameEsp" then
 						v.Character.Head.NameEsp.TextLabel.Visible = true
 						v.Character.Head.NameEsp.TextLabel.TextColor3 = shit.Color
 						v.Character.Humanoid.NameDisplayDistance = 0
 						if v.DisplayName == v.Name then
-							v.Character.Head.NameEsp.TextLabel.Text = v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							local yeah = v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							if shit.health then
+								yeah = yeah .. "\nHealth: " .. math.ceil(v.Character.Humanoid.Health)
+							end
+							v.Character.Head.NameEsp.TextLabel.Text = yeah
 						else
-							v.Character.Head.NameEsp.TextLabel.Text = v.DisplayName .. "\n" .. v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							local yeah = v.DisplayName .. "\n" .. v.Name .. " " .. round((game:GetService"Players".LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m"
+							if shit.health then
+								yeah = yeah .. "\nHealth: " .. math.ceil(v.Character.Humanoid.Health)
+							end
+							v.Character.Head.NameEsp.TextLabel.Text = yeah
 						end
 					elseif not shit.enabled and v.Character.Head:FindFirstChild"NameEsp" then v.Character.Head.NameEsp.TextLabel.Visible = false end
 				end
