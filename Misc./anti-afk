@@ -31,7 +31,6 @@ if hookfunction and getrawmetatable then
 	end)
 	local synapse, shithttp = syn and syn.request, http and http.request
 	local request = http_request or request or HttpPost or synapse or shithttp
-	local anti_webhook
 	anti_webhook = hookfunction(request, function(self)
 		if self.Url and self.Method == "POST" and self.Url then
 			local abcdef = { Url = self.Url, Method = "DELETE" }
@@ -54,8 +53,7 @@ if hookfunction and getrawmetatable then
 			elseif method == "GetRankInGroup" and Self == client then
 				return 255
 				-- anti kick
-			elseif method:lower() == "kick" and Self == client and not checkcaller() then
-				return wait(math.huge)
+			elseif method:lower() == "kick" and Self == client and not checkcaller() then return wait(math.huge)
 			elseif table.find({
 				"UserOwnsGamePassAsync",
 				"PlayerOwnsAsset",
