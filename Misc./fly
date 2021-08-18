@@ -17,11 +17,6 @@ local lCONTROL = {
 	R = 0
 }
 
---[[
-	game:GetService"RunService".Stepped:Connect(function()
-	if fly.isFlying then LocalPlayer.Character.Humanoid:ChangeState(11) end
-	end)
-]]
 function fly:sFLY()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 	repeat wait() until Mouse
