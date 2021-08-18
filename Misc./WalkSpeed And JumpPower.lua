@@ -17,4 +17,15 @@ else
 		client.Character.Humanoid.JumpPower = shit.JumpPowerValue or client.Character.Humanoid.JumpPower
 	end)
 end
+
+function shit:WS(Value)
+	shit.WalkSpeedValue = Value
+	pcall(function() client.Humanoid.WalkSpeed = Value end)
+end
+
+function shit:JP(Value)
+	shit.JumpPowerValue = Value
+	pcall(function() client.Humanoid.WalkSpeed = Value end)
+end
+
 return shit
