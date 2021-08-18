@@ -1,4 +1,4 @@
-local shit = { values = "Off", "Day", "Night" }
+local shit = { values = { "Off", "Day", "Night" } }
 game:GetService"RunService".RenderStepped:Connect(function()
 	if game:GetService"Lighting" and game:GetService"Lighting".ClockTime then
 		if shit.Night == true then game:GetService"Lighting".ClockTime = 3
