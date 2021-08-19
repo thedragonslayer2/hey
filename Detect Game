@@ -1,4 +1,8 @@
 local detectgames = {
+	["Military Tycoon"] = {
+		["GameID"] = "7180042682",
+		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Military%20Tycoon"
+	},
 	["LEVEL 5 House Tycoon"] = {
 		["GameID"] = "4109933355",
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/LEVEL%205%20House%20Tycoon"
