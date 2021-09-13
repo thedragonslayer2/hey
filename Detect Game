@@ -1,5 +1,9 @@
 local detectgames = {
 	[""] = { ["GameID"] = "", ["Link"] = "" },
+	["Mega Noob Simulator"] = {
+		["GameID"] = "4543144283",
+		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Mega%20Noob%20Simulator"
+	},
 	["Eating Simulator"] = {
 		["GameID"] = "6953291455",
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Eating%20Simulator"
@@ -12,7 +16,7 @@ local detectgames = {
 		["GameID"] = "3837864717",
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Spider-Man%20Simulator"
 	},
-	["UFO Tycoon 🚀"] = {
+	["UFO Tycoon"] = {
 		["GameID"] = "6129557066",
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/UFO%20Tycoon%20%F0%9F%9A%80"
 	},
