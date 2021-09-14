@@ -1,5 +1,9 @@
 local detectgames = {
 	[""] = { ["GameID"] = "", ["Link"] = "" },
+	["Naruto Defense Simulator"] = {
+		["GameID"] = "7087534079",
+		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Naruto%20Defense%20Simulator"
+	},
 	["Mega Noob Simulator"] = {
 		["GameID"] = "4543144283",
 		["Link"] = "https://raw.githubusercontent.com/thedragonslayer2/hey/main/Games/Mega%20Noob%20Simulator"
