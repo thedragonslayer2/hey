@@ -37,6 +37,7 @@ wait(0.5)
 IrisNotificationUserMrJack.ClearAllNotifications()
 wait(0.5)
 if goodserver == game.JobId or maxplayers == #game:GetService"Players":GetChildren() - 1 then
+	warn("Your current server is the most empty server atm")
 	return IrisNotificationMrJack(1, "Notification", "Your current server is the most empty server atm", 2)
 end
 IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
