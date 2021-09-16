@@ -42,5 +42,6 @@ if goodserver == game.JobId or maxplayers == #game:GetService"Players":GetChildr
 end
 IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
 table.insert(_G.FailedServerID, goodserver)
+warn("Server Found! Players: maxplayers")
 game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
 return true
