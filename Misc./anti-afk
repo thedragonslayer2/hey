@@ -1,5 +1,4 @@
 repeat wait() until game:IsLoaded()
-local players = game:GetService"Players"
 local client = game:GetService"Players".LocalPlayer
 local pages, checkplaceId = game:GetService"AssetService":GetGamePlacesAsync()
 while wait() do
@@ -16,18 +15,11 @@ client.DevCameraOcclusionMode = "Invisicam"
 client.CameraMaxZoomDistance = 1e4
 if hookfunction and getrawmetatable then
 	pcall(function() setreadonly(getrawmetatable(game), false) end)
-	spawn(function()
-		wait(1)
-		if client.DevCameraOcclusionMode ~= "Invisicam" or client.CameraMaxZoomDistance ~= 1e4 then
-			local yeahidkman
-			yeahidkman = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
-				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam"
-				elseif Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
-				return yeahidkman(Self, Index, Value)
-			end)
-			client.CameraMaxZoomDistance = 1e4
-			client.DevCameraOcclusionMode = "Invisicam"
-		end
+	-- anti noclip bypass
+	local rnd, BypassAnti_Noclip = Random.new():NextInteger(150, 1e5)
+	BypassAnti_Noclip = hookfunction(getrawmetatable(Enum.HumanoidStateType).__index, function(Self, Index)
+		if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return rnd end
+		return BypassAnti_Noclip(Self, Index)
 	end)
 	local synapse, shithttp = syn and syn.request, http and http.request
 	local request = http_request or request or HttpPost or synapse or shithttp
@@ -50,37 +42,41 @@ if hookfunction and getrawmetatable then
 		_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
 			local method = getnamecallmethod()
 			if method == "IsInGroup" and Self == client then return true
-			elseif method == "GetRankInGroup" and Self == client then
-				return 255
+			elseif method == "GetRankInGroup" and Self == client then return 255
+			elseif method:lower() == "kick" and Self == client and not checkcaller() then
 				-- anti kick
-			elseif method:lower() == "kick" and Self == client and not checkcaller() then return wait(math.huge)
+				return wait(math.huge)
 			elseif table.find({
 				"UserOwnsGamePassAsync",
 				"PlayerOwnsAsset",
 				"PlayerHasPass",
 				"UserHasBadge",
 				"UserHasBadgeAsync"
-			}, method) then return true end
+			}, method) and Self == client then return true end
 			return _namecall(Self, ...)
 		end)
 	end
+	spawn(function()
+		wait(1)
+		if client.DevCameraOcclusionMode ~= "Invisicam" or client.CameraMaxZoomDistance ~= 1e4 then
+			local Invisicam
+			Invisicam = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
+				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam"
+				elseif Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
+				return Invisicam(Self, Index, Value)
+			end)
+			client.CameraMaxZoomDistance = 1e4
+			client.DevCameraOcclusionMode = "Invisicam"
+		end
+	end)
 end
 -- anti afk
 if getconnections then
 	for i, v in next, getconnections(client.Idled) do v:Disable() end
-else
-	local vu = game:GetService"VirtualUser"
-	client.Idled:Connect(function()
-		pcall(function()
-			vu:CaptureController()
-			wait(1)
-			vu:ClickButton2(Vector2.new())
-		end)
-		pcall(function()
-			vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-			wait(1)
-			vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-		end)
-	end)
 end
+local vu = game:GetService"VirtualUser"
+client.Idled:Connect(function()
+	vu:CaptureController()
+	vu:ClickButton2(Vector2.new())
+end)
 return warn"ANTI AFK ACTIVATED!"
