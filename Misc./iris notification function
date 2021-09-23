@@ -1,21 +1,4 @@
-if not IrisNotificationUserMrJack then
-	getgenv().IrisNotificationUserMrJack = loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./Iris's%20Hot%20Notification%20Script%20V2")()
-end
-if not IrisNotificationRainbowColor then
-	spawn(function()
-		while wait() do
-			getgenv().IrisNotificationRainbowColor = Color3.fromHSV(tick() % 6 / 6, 1, 1)
-		end
-	end)
-end
-if not IrisNotificationUserIcon then
-	local IconID = game:GetService"MarketplaceService":GetProductInfo(game:GetService"AssetService":GetGamePlacesAsync():GetCurrentPage()[1].PlaceId).IconImageAssetId
-	getgenv().IrisNotificationUserIcon = "rbxassetid://" .. IconID
-	if not IrisNotificationUserIcon or IrisNotificationUserIcon == "rbxassetid://0" then
-		getgenv().IrisNotificationUserIcon = "rbxassetid://7141323263"
-	end
-end
-getgenv().IrisNotificationMrJack = function(type, title, description, duration)
+local function wut()
 	if not IrisNotificationUserMrJack then
 		getgenv().IrisNotificationUserMrJack = loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./Iris's%20Hot%20Notification%20Script%20V2")()
 	end
@@ -33,15 +16,29 @@ getgenv().IrisNotificationMrJack = function(type, title, description, duration)
 			getgenv().IrisNotificationUserIcon = "rbxassetid://7141323263"
 		end
 	end
+end
+
+getgenv().IrisNotificationMrJack = function(type, title, description, duration)
+	wut()
 	if type == 1 then
 		IrisNotificationUserMrJack.Notify(title, description, IrisNotificationUserIcon, {
 			Duration = duration or 1,
 			TitleSettings = { TextColor3 = IrisNotificationRainbowColor, TextXAlignment = Enum.TextXAlignment.Right },
 			DescriptionSettings = { TextColor3 = Color3.fromRGB(240, 240, 240), TextXAlignment = Enum.TextXAlignment.Center, TextYAlignment = Enum.TextYAlignment.Center },
-			IconSettings = { BackgroundTransparency = 0.5 },
-			GradientSettings = { GradientEnabled = false, SolidColor = IrisNotificationRainbowColor }
+			GradientSettings = { GradientEnabled = false, SolidColor = IrisNotificationRainbowColor, Extend = true },
+			Main = {
+				BorderColor3 = Color3.fromRGB(0, 0, 0),
+				BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+				BackgroundTransparency = 0.5,
+				Rounding = false,
+				BorderSizePixel = 0
+			}
 		})
 	elseif type == 2 then
-		IrisNotificationUserMrJack.WallNotification(title, description, { Duration = duration or 1, TitleSettings = { Enabled = false } })
+		IrisNotificationUserMrJack.WallNotification(title, description, {
+			Duration = duration or 1,
+			TitleSettings = { Enabled = true, TextColor3 = IrisNotificationRainbowColor },
+			DescriptionSettings = { Font = Enum.Font.Code }
+		})
 	end
 end
