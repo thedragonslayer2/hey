@@ -18,10 +18,10 @@ local function wut()
 	end
 end
 
-getgenv().IrisNotificationMrJack = function(type, title, description, duration)
+getgenv().IrisNotificationMrJack = function(type, title, description, duration, icon)
 	wut()
 	if type == 1 then
-		IrisNotificationUserMrJack.Notify(title, description, IrisNotificationUserIcon, {
+		IrisNotificationUserMrJack.Notify(title, description, icon or IrisNotificationUserIcon, {
 			Duration = duration or 1,
 			TitleSettings = { TextColor3 = IrisNotificationRainbowColor, TextXAlignment = Enum.TextXAlignment.Right },
 			DescriptionSettings = { TextColor3 = Color3.fromRGB(240, 240, 240), TextXAlignment = Enum.TextXAlignment.Center, TextYAlignment = Enum.TextYAlignment.Center },
