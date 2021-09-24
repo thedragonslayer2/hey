@@ -18,6 +18,7 @@ local function wut()
 	end
 end
 
+wut()
 getgenv().IrisNotificationMrJack = function(type, title, description, duration, icon)
 	wut()
 	if type == 1 then
