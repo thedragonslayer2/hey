@@ -1,17 +1,18 @@
 local shit = {}
-local PathfindingService = game:GetService"PathfindingService"
-local Players = game:GetService"Players"
-local player = Players.LocalPlayer
-local character = player.Character
-local humanoid = character:WaitForChild"Humanoid"
-local waypoints
-local nextWaypointIndex
-local reachedConnection
-local blockedConnection
 
-function shit:followPath(destination)
-	pcall(function()
-		local path = PathfindingService:CreatePath()
+function shit:GO(pos)
+	local PathfindingService = game:GetService"PathfindingService"
+	local Players = game:GetService"Players"
+	local path = PathfindingService:CreatePath()
+	local player = Players.LocalPlayer
+	local character = player.Character
+	local humanoid = character:WaitForChild"Humanoid"
+	local waypoints
+	local nextWaypointIndex
+	local reachedConnection
+	local blockedConnection
+
+	local function followPath(destination)
 		local success, errorMessage = pcall(function()
 			path:ComputeAsync(character.PrimaryPart.Position, destination)
 		end)
@@ -20,7 +21,7 @@ function shit:followPath(destination)
 			blockedConnection = path.Blocked:Connect(function(blockedWaypointIndex)
 				if blockedWaypointIndex >= nextWaypointIndex then
 					blockedConnection:Disconnect()
-					shit:followPath(destination)
+					followPath(destination)
 				end
 			end)
 			if not reachedConnection then
@@ -35,9 +36,12 @@ function shit:followPath(destination)
 				end)
 			end
 			nextWaypointIndex = 2
+			if waypoints[nextWaypointIndex].Action == Enum.PathWaypointAction.Jump then humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end
 			humanoid:MoveTo(waypoints[nextWaypointIndex].Position)
 		else warn("Path not computed!", errorMessage) end
-	end)
+	end
+
+	followPath(pos)
 end
 
 return shit
