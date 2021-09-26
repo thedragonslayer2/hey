@@ -9,11 +9,16 @@ while wait() do
 	pages:AdvanceToNextPageAsync()
 end
 -- invisicam
-client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
-client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
+client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function()
+	wait(0.2)
+	client.DevCameraOcclusionMode = "Invisicam"
+end)
+client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function()
+	wait(0.2)
+	client.CameraMaxZoomDistance = 1e4
+end)
 client.DevCameraOcclusionMode = "Invisicam"
 client.CameraMaxZoomDistance = 1e4
-print(client.DevCameraOcclusionMode, client.CameraMaxZoomDistance)
 if hookfunction and getrawmetatable then
 	pcall(function() setreadonly(getrawmetatable(game), false) end)
 	--[[
