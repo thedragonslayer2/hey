@@ -1,4 +1,4 @@
-local shit = {}
+local shit = { toggle = true }
 
 function shit:Find(pos)
 	local PathfindingService = game:GetService"PathfindingService"
@@ -15,10 +15,13 @@ function shit:Find(pos)
 			humanoid.Jump = true
 		end
 	end)
-	for i, v in next, waypoints do
-		humanoid:MoveTo(v.Position)
-		humanoid.MoveToFinished:Wait()
-	end
+	pcall(function()
+		for i, v in next, waypoints do
+			if not shit.toggle then break end
+			humanoid:MoveTo(v.Position)
+			humanoid.MoveToFinished:Wait()
+		end
+	end)
 	waypoints = nil
 end
 
