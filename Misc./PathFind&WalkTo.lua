@@ -10,7 +10,7 @@ function shit:GO(pos)
 	path:ComputeAsync(character.PrimaryPart.Position, pos)
 	local waypoints = path:GetWaypoints()
 	for i, v in next, waypoints do
-		if v.Action == Enum.PathWaypointAction.Jump then humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end
+		humanoid.Character.Humanoid.Jump = true
 		humanoid:MoveTo(v.Position)
 		humanoid.MoveToFinished:Wait()
 	end
