@@ -1,6 +1,13 @@
 local shit = { toggle = true }
+local CAS = game:GetService"ContextActionService"
+local FREEZE_COMMAND = "Stunned"
+
+local function nomove()
+	CAS:BindActionAtPriority(FREEZE_COMMAND, function() return Enum.ContextActionResult.Sink end, false, Enum.ContextActionPriority.High.Value, Enum.KeyCode.W, Enum.KeyCode.S, Enum.KeyCode.A, Enum.KeyCode.D, Enum.KeyCode.Up, Enum.KeyCode.Space, Enum.KeyCode.Down)
+end
 
 function shit:Find(part)
+	nomove()
 	local PathfindingService = game:GetService"PathfindingService"
 	local Players = game:GetService"Players"
 	local player = Players.LocalPlayer
@@ -25,6 +32,7 @@ function shit:Find(part)
 		end
 	end)
 	waypoints = nil
+	CAS:UnbindAction(FREEZE_COMMAND)
 end
 
 return shit
