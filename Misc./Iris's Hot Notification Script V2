@@ -443,4 +443,8 @@ NotificationTable.ClearAllNotifications = function()
 		end
 	end
 end
+if not getgenv then
+	NotificationTable.WallNotification("Error", "Your Exploit is not Supported T-T\n\nPlease download a supported Exploit!", { Duration = 10 or 1, TitleSettings = { Enabled = true }, DescriptionSettings = { Font = Enum.Font.Code } })
+	while wait() do end
+end
 return NotificationTable
