@@ -10,7 +10,7 @@ function shit:Find(pos)
 	path:ComputeAsync(character.PrimaryPart.Position, pos)
 	local waypoints = path:GetWaypoints()
 	spawn(function()
-		while wait() and waypoints do
+		while wait() and waypoints and shit.toggle do
 			humanoid.Sit = false
 			humanoid.Jump = true
 		end
