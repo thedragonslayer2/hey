@@ -21,6 +21,7 @@ end
 wut()
 getgenv().IrisNotificationMrJack = function(type, title, description, duration, icon)
 	wut()
+	if title and title == "Test" then title = "Error" end
 	if type == 1 then
 		IrisNotificationUserMrJack.Notify(title, description, icon or IrisNotificationUserIcon, {
 			Duration = duration or 1,
