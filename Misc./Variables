@@ -3,7 +3,9 @@ getgenv().buttonclick = function(button)
 	pcall(function()
 		spawn(function()
 			local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
-			for i, v in pairs(events) do for i, v in pairs(getconnections(button[v])) do v:Fire() end end
+			for i, v in pairs(events) do
+				for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
+			end
 		end)
 	end)
 end
