@@ -2,8 +2,8 @@ if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 IrisNotificationMrJack(1, "Notification", "Checking Servers!", 9e9)
-if ThePlaceID and ThePlaceID == 0 then ThePlaceID = game.PlaceId end
-local GameID = ThePlaceID or game.PlaceId
+if not ThePlaceID or ThePlaceID == 0 then ThePlaceID = game.PlaceId end
+local GameID = ThePlaceID
 local maxplayers, gamelink, goodserver, data_table = math.huge, "https://games.roblox.com/v1/games/" .. GameID .. "/servers/Public?sortOrder=Asc&limit=100"
 if not _G.FailedServerID then _G.FailedServerID = {} end
 
