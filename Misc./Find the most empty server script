@@ -2,7 +2,8 @@ if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 IrisNotificationMrJack(1, "Notification", "Checking Servers!", 9e9)
-local maxplayers, gamelink, goodserver, data_table = math.huge, "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+local GameID = ID or game.PlaceId
+local maxplayers, gamelink, goodserver, data_table = math.huge, "https://games.roblox.com/v1/games/" .. GameID .. "/servers/Public?sortOrder=Asc&limit=100"
 if not _G.FailedServerID then _G.FailedServerID = {} end
 
 local function serversearch()
@@ -43,5 +44,5 @@ end
 IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. goodserver, 2)
 table.insert(_G.FailedServerID, goodserver)
 warn("Server Found! Players: " .. maxplayers)
-game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
+game:GetService"TeleportService":TeleportToPlaceInstance(GameID, goodserver)
 return true
