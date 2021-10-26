@@ -3,16 +3,29 @@ if not IrisNotificationMrJack then
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 warn"Looking For A Server"
 IrisNotificationMrJack(1, "Notification", "Looking For A Server", 2)
-local goodserver = nil
-local gamelink = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+local goodserver, GotServers = nil, {}
+local gamelink, data_table = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+pcall(function()
+	if not isfolder"MrJack Settings" then makefolder"MrJack Settings" end
+	GotServers = game:GetService"HttpService":JSONDecode(readfile"MrJack Settings/ServerHop.json")
+end)
+
+local function savefile()
+	pcall(function()
+		writefile("MrJack Settings/ServerHop.json", game:GetService"HttpService":JSONEncode(GotServers))
+	end)
+end
 
 function serversearch()
-	for _, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink)).data) do
+	data_table = game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink))
+	for _, v in pairs(data_table.data) do
 		pcall(function()
-			if type(v) == "table" and tonumber(v.maxPlayers) > tonumber(v.playing) and v.id ~= game.JobId then
+			if type(v) == "table" and tonumber(v.maxPlayers) > tonumber(v.playing) and v.id ~= game.JobId and not table.find(GotServers, v.id) then
 				goodserver = v.id
 				warn("Server Found " .. v.id)
 				IrisNotificationMrJack(1, "Notification", "Teleporting To Server\n" .. v.id, 5)
+				table.insert(GotServers, v.id)
+				savefile()
 				game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId, goodserver)
 				wait(6)
 			end
@@ -22,7 +35,7 @@ end
 
 function getservers()
 	pcall(serversearch)
-	for i, v in pairs(game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gamelink))) do
+	for i, v in pairs(data_table) do
 		if i == "nextPageCursor" then
 			if gamelink:find"&cursor=" then
 				local a = gamelink:find"&cursor="
@@ -36,6 +49,10 @@ function getservers()
 end
 
 pcall(getservers)
+if goodserver == nil and #GotServers ~= 0 then
+	GotServers = {}
+	pcall(getservers)
+end
 if goodserver == nil then
 	warn"Server Hop Failed"
 	IrisNotificationMrJack(1, "Notification", "No Server Found", 2)
