@@ -3,7 +3,7 @@ if not IrisNotificationMrJack then
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 warn"Looking For A Server"
 IrisNotificationMrJack(1, "Notification", "Looking For A Server", 2)
-local goodserver, GotServers = nil, {}
+local goodserver, GotServers = nil, { game.JobId }
 local gamelink, data_table = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
 pcall(function()
 	if not isfolder"MrJack Settings" then makefolder"MrJack Settings" end
@@ -48,10 +48,9 @@ function getservers()
 	end
 end
 
-table.insert(GotServers, game.JobId)
 pcall(getservers)
 if goodserver == nil and #GotServers <= 1 then
-	GotServers = {}
+	GotServers = { game.JobId }
 	pcall(getservers)
 end
 if goodserver == nil then
