@@ -3,100 +3,70 @@ local client = game:GetService"Players".LocalPlayer
 local pages, checkplaceId = game:GetService"AssetService":GetGamePlacesAsync()
 while wait() do
 	for i, place in pairs(pages:GetCurrentPage()) do
-		if table.find({ "5343994291", "2727067538" }, tostring(place.PlaceId)) then checkplaceId = true end
+		if table.find({ "5343994291" }, tostring(place.PlaceId)) then checkplaceId = true end
 	end
 	if pages.IsFinished then break end
 	pages:AdvanceToNextPageAsync()
 end
--- invisicam
-client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function()
-	wait(0.2)
-	client.DevCameraOcclusionMode = "Invisicam"
-end)
-client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function()
-	wait(0.2)
-	client.CameraMaxZoomDistance = 1e4
-end)
-client.DevCameraOcclusionMode = "Invisicam"
-client.CameraMaxZoomDistance = 1e4
+client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
+client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 1e4 end)
+client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 1e4
 if hookfunction and getrawmetatable then
 	pcall(function() setreadonly(getrawmetatable(game), false) end)
-	--[[
-		-- anti noclip bypass
-		local rnd, BypassAnti_Noclip = Random.new():NextInteger(150, 1e5)
-		BypassAnti_Noclip = hookfunction(getrawmetatable(Enum.HumanoidStateType).__index, function(Self, Index)
+	local synapse, shithttp = syn and syn.request, http and http.request
+	local request = http_request or request or HttpPost or synapse or shithttp
+	if request then
+		anti_webhook = hookfunction(request, function(self)
+			if self.Url and self.Method == "POST" and self.Url then
+				if string.find(self.Url, "Bypass") then self.Url = string.gsub(self.Url, "Bypass", "")
+				else
+					local abcdef = { Url = self.Url, Method = "DELETE" }
+					request(abcdef)
+					self.Url = "SOMEONE TRYING TO LOG SOMETHING!"
+				end
+			end
+			return anti_webhook(self)
+		end)
+	end
+	--[[local rnd, BypassAnti_Noclip = Random.new():NextInteger(150, 1e5)
+	BypassAnti_Noclip = hookfunction(getrawmetatable(Enum.HumanoidStateType).__index, function(Self, Index)
 		if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return rnd end
 		return BypassAnti_Noclip(Self, Index)
-		end)
-		local synapse, shithttp = syn and syn.request, http and http.request
-		local request = http_request or request or HttpPost or synapse or shithttp
-		anti_webhook = hookfunction(request, function(self)
-		if self.Url and self.Method == "POST" and self.Url then
-		local abcdef = { Url = self.Url, Method = "DELETE" }
-		request(abcdef)
-		self.Url = "https://discord.com/api/webhooks/869858172796559380/_cWT7d4snqvOi7P4vZRvFt5VgiuN-MeXfddz-W6nSaxxxwqghH_Z_pcWIlblmyZEPWdi3543"
-		end
-		return anti_webhook(self)
-		end)
-		local acc_spoof
-		acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
+	end)
+	local acc_spoof
+	acc_spoof = hookfunction(getrawmetatable(client).__index, function(Self, Index)
 		if Index == "AccountAge" and Self == client then return tonumber"99999"
 		elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
 		return acc_spoof(Self, Index)
-		end)
-		if not checkplaceId then
-		local _namecall
-		_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
-		local method = getnamecallmethod()
-		if method == "IsInGroup" and Self == client then return true
-		elseif method == "GetRankInGroup" and Self == client then return 255
-		elseif method:lower() == "kick" and Self == client and not checkcaller() then
-		-- anti kick
-		return wait(math.huge)
-		elseif table.find({
-		"UserOwnsGamePassAsync",
-		"PlayerOwnsAsset",
-		"PlayerHasPass",
-		"UserHasBadge",
-		"UserHasBadgeAsync"
-		}, method) and Self == client then return true end
-		return _namecall(Self, ...)
-		end)
-		end
-	]]
+	end)
 	if not checkplaceId then
 		local _namecall
 		_namecall = hookfunction(getrawmetatable(game).__namecall, function(Self, ...)
 			local method = getnamecallmethod()
-			if not checkcaller() and method:lower() == "kick" and Self == client then
-				-- anti kick
-				return wait(math.huge)
-			end
+			if method:lower() == "kick" and Self == client and not checkcaller() then return wait(math.huge)
+			elseif method == "GetRankInGroup" and Self == client then return 255
+			elseif table.find({
+				"UserOwnsGamePassAsync",
+				"PlayerOwnsAsset",
+				"PlayerHasPass",
+				"UserHasBadge",
+				"UserHasBadgeAsync",
+				"IsInGroup"
+			}, method) and Self == client then return true end
 			return _namecall(Self, ...)
 		end)
-	end
-	spawn(function()
-		wait(1)
-		if tostring(client.DevCameraOcclusionMode) == "Invisicam" and tonumber(client.CameraMaxZoomDistance) == 1e4 then 
-		else
-			local Invisicam
-			Invisicam = hookfunction(getrawmetatable(client).__newindex, function(Self, Index, Value)
-				if Index == "DevCameraOcclusionMode" and Self == client then Value = "Invisicam"
-				elseif Index == "CameraMaxZoomDistance" and Self == client then Value = 1e4 end
-				return Invisicam(Self, Index, Value)
-			end)
-			client.CameraMaxZoomDistance = 1e4
-			client.DevCameraOcclusionMode = "Invisicam"
-		end
-	end)
+	end]]
 end
 -- anti afk
-if getconnections then
-	for i, v in next, getconnections(client.Idled) do v:Disable() end
-end
 local vu = game:GetService"VirtualUser"
-client.Idled:Connect(function()
+game:service"Players".LocalPlayer.Idled:connect(function()
 	vu:CaptureController()
 	vu:ClickButton2(Vector2.new())
+end)
+local vu = game:GetService"VirtualUser"
+game:GetService"Players".LocalPlayer.Idled:connect(function()
+	vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+	wait(1)
+	vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 end)
 return warn"ANTI AFK ACTIVATED!"
