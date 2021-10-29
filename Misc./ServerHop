@@ -48,7 +48,7 @@ function getservers()
 	end
 end
 
-table.insert(GotServers, game.JobId)
+if not table.find(GotServers, game.JobId) then table.insert(GotServers, game.JobId) end
 pcall(getservers)
 if goodserver == nil and #GotServers <= 1 then
 	GotServers = { game.JobId }
