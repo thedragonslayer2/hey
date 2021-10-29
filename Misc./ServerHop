@@ -50,7 +50,7 @@ end
 
 if not table.find(GotServers, game.JobId) then table.insert(GotServers, game.JobId) end
 pcall(getservers)
-if goodserver == nil and #GotServers <= 1 then
+if goodserver == nil then
 	GotServers = { game.JobId }
 	pcall(getservers)
 end
