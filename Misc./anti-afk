@@ -13,6 +13,7 @@ client.Idled:connect(function()
 end)
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
+client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
 -- anti discord
 local synapse, shithttp = syn and syn.request, http and http.request
 local request = http_request or request or HttpPost or synapse or shithttp
@@ -52,9 +53,9 @@ if hookmetamethod then
 		elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
 		return acc_spoof(Self, Index)
 	end)
+	local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
 	-- things
 	local OldNamecall
-	local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
 	OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
 		local method = getnamecallmethod()
 		if method:lower() == "kick" and Self == client and not checkcaller() then return wait(math.huge)
@@ -65,6 +66,12 @@ if hookmetamethod then
 		elseif method == "IsInGroup" and Self == client then return true end
 		return OldNamecall(Self, ...)
 	end)
+	-- gamepass thing
+	if hookfunction then
+		hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
+		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
+		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
+	end
 	pcall(function() setreadonly(getrawmetatable(game), true) end)
 end
 client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
