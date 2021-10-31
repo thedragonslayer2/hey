@@ -1,6 +1,7 @@
 repeat wait() until game:IsLoaded()
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
+getgenv().DiscordInvite = game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/discord"
 getgenv().buttonclick = function(button)
 	spawn(function()
 		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
