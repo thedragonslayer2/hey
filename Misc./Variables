@@ -1,4 +1,6 @@
 repeat wait() until game:IsLoaded()
+getgenv().players = game:GetService"Players"
+getgenv().client = game:GetService"Players".LocalPlayer
 getgenv().buttonclick = function(button)
 	spawn(function()
 		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
@@ -9,5 +11,72 @@ getgenv().buttonclick = function(button)
 		end
 	end)
 end
-getgenv().players = game:GetService"Players"
-getgenv().client = game:GetService"Players".LocalPlayer
+getgenv().RandomName = function(Size)
+	local String = ""
+	local Alphabet = {
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"0",
+		"a",
+		"b",
+		"c",
+		"d",
+		"e",
+		"f",
+		"g",
+		"h",
+		"i",
+		"j",
+		"k",
+		"l",
+		"m",
+		"n",
+		"o",
+		"p",
+		"q",
+		"r",
+		"s",
+		"t",
+		"u",
+		"v",
+		"w",
+		"x",
+		"y",
+		"z",
+		"A",
+		"B",
+		"C",
+		"D",
+		"E",
+		"F",
+		"G",
+		"H",
+		"I",
+		"J",
+		"K",
+		"L",
+		"M",
+		"N",
+		"O",
+		"P",
+		"Q",
+		"R",
+		"S",
+		"T",
+		"U",
+		"V",
+		"W",
+		"X",
+		"Y",
+		"Z"
+	}
+	for i = 1, Size do String = String .. Alphabet[math.random(#Alphabet)] end
+	return String
+end
