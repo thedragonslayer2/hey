@@ -10,7 +10,10 @@ local function wut()
 		end)
 	end
 	if not IrisNotificationUserIcon then
-		local IconID = game:GetService"MarketplaceService":GetProductInfo(game:GetService"AssetService":GetGamePlacesAsync():GetCurrentPage()[1].PlaceId).IconImageAssetId
+		local IconID = 0
+		pcall(function()
+			IconID = game:GetService"MarketplaceService":GetProductInfo(game:GetService"AssetService":GetGamePlacesAsync():GetCurrentPage()[1].PlaceId).IconImageAssetId
+		end)
 		getgenv().IrisNotificationUserIcon = "rbxassetid://" .. IconID
 		if not IrisNotificationUserIcon or IrisNotificationUserIcon == "rbxassetid://0" then
 			getgenv().IrisNotificationUserIcon = "rbxassetid://7141323263"
