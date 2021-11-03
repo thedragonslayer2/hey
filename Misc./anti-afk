@@ -76,20 +76,7 @@ if hookmetamethod then
 		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
 		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
 	end
-	coroutine.wrap(function()
-		wait(2)
-		client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
-		if client.DevCameraOcclusionMode ~= Enum.DevCameraOcclusionMode.Invisicam or client.CameraMaxZoomDistance ~= 9e4 then
-			local CamShit
-			CamShit = hookmetamethod(game, "__index", function(Self, Index)
-				if Index == "CameraMaxZoomDistance" and Self == client then return 9e4
-				elseif Index == "DevCameraOcclusionMode" and Self == client then return Enum.DevCameraOcclusionMode.Invisicam end
-				return CamShit(Self, Index)
-			end)
-			client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
-		end
-		pcall(function() setreadonly(getrawmetatable(game), true) end)
-	end)()
+	pcall(function() setreadonly(getrawmetatable(game), true) end)
 end
 client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
 return warn"ANTI AFK ACTIVATED!"
