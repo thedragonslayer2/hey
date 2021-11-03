@@ -3,14 +3,15 @@ local client = game:GetService"Players".LocalPlayer
 -- anti afk
 local vu = game:GetService"VirtualUser"
 client.Idled:connect(function()
-	spawn(function()
-		vu:CaptureController()
-		vu:ClickButton2(Vector2.new())
-	end)
+	vu:CaptureController()
+	vu:ClickButton2(Vector2.new())
+end)
+client.Idled:connect(function()
 	vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 	wait(1)
 	vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 end)
+client.Idled:connect(function() vu:ClickButton2(Vector2.new()) end)
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
 client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
@@ -58,7 +59,10 @@ if hookmetamethod then
 	local OldNamecall
 	OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
 		local method = getnamecallmethod()
-		if method:lower() == "kick" and Self == client and not checkcaller() then return wait(math.huge)
+		if method:lower() == "kick" and Self == client and not checkcaller() then
+			local args = { ... }
+			if args[1] and args[1] == "MrJack" then OldNamecall(Self, args[2]) end
+			return wait(math.huge)
 		elseif (method == "UserOwnsGamePassAsync" or method == "PlayerOwnsAsset") and Self == MarketplaceService then return true
 		elseif (method == "UserHasBadgeAsync" or method == "UserHasBadge") and Self == BadgeService then return true
 		elseif method == "PlayerHasPass" and Self == GamePassService then return true
@@ -72,7 +76,20 @@ if hookmetamethod then
 		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
 		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
 	end
-	pcall(function() setreadonly(getrawmetatable(game), true) end)
+	coroutine.wrap(function()
+		wait(2)
+		client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+		if client.DevCameraOcclusionMode ~= Enum.DevCameraOcclusionMode.Invisicam or client.CameraMaxZoomDistance ~= 9e4 then
+			local CamShit
+			CamShit = hookmetamethod(game, "__index", function(Self, Index)
+				if Index == "CameraMaxZoomDistance" and Self == client then return 9e4
+				elseif Index == "DevCameraOcclusionMode" and Self == client then return Enum.DevCameraOcclusionMode.Invisicam end
+				return CamShit(Self, Index)
+			end)
+			client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+		end
+		pcall(function() setreadonly(getrawmetatable(game), true) end)
+	end)()
 end
 client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
 return warn"ANTI AFK ACTIVATED!"
