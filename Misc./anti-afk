@@ -75,10 +75,7 @@ if hookmetamethod then
 	end
 	pcall(function() setreadonly(getrawmetatable(game), true) end)
 end
-coroutine.wrap(function()
-	repeat wait() until workspace and workspace:FindFirstChild"Camera" and client.Character and client.Character:FindFirstChild"Humanoid" and workspace.Camera.CameraSubject == client.Character.Humanoid
-	client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
-	client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
-	client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
-end)()
+client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
+client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
+client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
 return warn"ANTI AFK ACTIVATED!"
