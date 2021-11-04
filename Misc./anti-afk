@@ -12,9 +12,6 @@ client.Idled:connect(function()
 	vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 end)
 client.Idled:connect(function() vu:ClickButton2(Vector2.new()) end)
-client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
-client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
-client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
 -- anti discord
 local synapse, shithttp = syn and syn.request, http and http.request
 local request = http_request or request or HttpPost or synapse or shithttp
@@ -78,5 +75,10 @@ if hookmetamethod then
 	end
 	pcall(function() setreadonly(getrawmetatable(game), true) end)
 end
-client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+coroutine.wrap(function()
+	repeat wait() until workspace and workspace:FindFirstChild"Camera" and client.Character and client.Character:FindFirstChild"Humanoid" and workspace.Camera.CameraSubject == client.Character.Humanoid
+	client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
+	client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
+	client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+end)()
 return warn"ANTI AFK ACTIVATED!"
