@@ -56,7 +56,7 @@ if hookmetamethod then
 	local OldNamecall
 	OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
 		local method = getnamecallmethod()
-		if method:lower() == "kick" and Self == client and not checkcaller() then
+		if method:lower() == "kick" and Self == client then
 			local args = { ... }
 			if args[1] and args[1] == "MrJack" then OldNamecall(Self, args[2]) end
 			return wait(math.huge)
