@@ -291,7 +291,7 @@ if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 library:Init()
-if hookfunction or getnamecallmethod then
+if not hookfunction or not getnamecallmethod then
 	return IrisNotificationMrJack(2, "Notification", "some features will not show because your executor is not supported,\n\nPlease download a Better one!", 7)
 end
 return true
