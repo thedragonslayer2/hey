@@ -156,7 +156,7 @@ pcall(function()
 						for i, v in next, workspace.OrbFolder:GetChildren() do
 							pcall(function()
 								local shit = v:FindFirstChildWhichIsA("TouchTransmitter", true)
-								while (library.flags.Bounce or library.flags.AutoFarm) and shit and shit.Parent.Transparency ~= 0 and wait() do
+								while (library.flags.Bounce or library.flags.AutoFarm) and shit and wait() do
 									coroutine.wrap(function()
 										local speed = 100
 										if (shit.Parent.Position - client.Character.HumanoidRootPart.Position).magnitude > 200 then speed = 5e3 end
