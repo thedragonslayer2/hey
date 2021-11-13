@@ -14,6 +14,7 @@ pcall(function()
 				for i, v in next, StatDataMOD.StatVals do
 					if library.flags[i] then
 						game:GetService"ReplicatedStorage".Networking.RemoteEvents.StatsChange:FireServer(i)
+						wait(0.1)
 					end
 				end
 			end)
