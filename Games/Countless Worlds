@@ -45,7 +45,7 @@ if hookfunction and getnamecallmethod then
 					for i, v in next, workspace.MobSpawns:GetChildren() do
 						pcall(function()
 							local Name = v["Mob_Data"].MobName.Value
-							if Name == library.flags.Target and autofarmtog then
+							if Name == library.flags.Target and autofarmtog and not v["Mob_Data"].InCombat.Value then
 								unsit()
 								client.Character.HumanoidRootPart.CFrame = v.CFrame
 								wait(2)
@@ -224,6 +224,22 @@ if hookfunction and getnamecallmethod then
 		if not checkcaller() and getnamecallmethod() == "FireServer" and Self.Name == "HitDetection" and (library.flags.GODMODE or library.flags.AutoFarm) then return end
 		return OldNameCall(Self, ...)
 	end)
+	local autoHornetGrab
+	Misc_window:AddToggle{
+		text = "Auto Grap Hornet Quest",
+		callback = function(v)
+			autoHornetGrab = v
+			while autoHornetGrab and wait() do
+				pcall(function()
+					if client.PlayerGui.TrackQuest.TrackFrame.QuestName.Text ~= "Hornet Eradication" then
+						game:GetService"ReplicatedStorage".Networking.RemoteFunctions.CancelQuest:InvokeServer()
+						game:GetService"ReplicatedStorage".Networking.RemoteEvents.AcceptQuest:FireServer"Hornet Eradication"
+						wait(0.5)
+					end
+				end)
+			end
+		end
+	}
 	Misc_window:AddToggle{ text = "God Mode", flag = "GODMODE" }
 	pcall(function()
 		Misc_window:AddSlider{
