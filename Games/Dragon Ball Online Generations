@@ -255,7 +255,7 @@ else
 	game:GetService"RunService".Stepped:Connect(function()
 		pcall(function()
 			if not gettingdp then
-				client.Character.HumanoidRootPart.CFrame = tptargetfast.HumanoidRootPart.CFrame * CFrame.new(0, 0, 10)
+				client.Character.HumanoidRootPart.CFrame = tptargetfast.HumanoidRootPart.CFrame * CFrame.new(0, 0, 13)
 			end
 		end)
 	end)
@@ -473,3 +473,4 @@ if not IrisNotificationMrJack then
 	loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()
 elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications() end
 library:Init()
+return false
