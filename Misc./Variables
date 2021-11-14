@@ -11,7 +11,7 @@ getgenv().buttonclick = function(button)
 	end
 end
 getgenv().Obfuscate = function(String)
-	setclipboard(String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String .. "\"")
+	setclipboard('loadstring("'..String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String .. "\""..'")()')
 	warn("Obfuscated Using Trash Obfuscator!")
 end
 getgenv().RandomName = function(Size)
