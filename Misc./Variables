@@ -10,7 +10,8 @@ getgenv().buttonclick = function(button)
 		end)
 	end
 end
-getgenv().Obfuscate = function(String)
+getgenv().Obfuscate = function(String, Site)
+	if Site then String = game:HttpGet(String) end
 	local encode = String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String
 	setclipboard('loadstring("' .. encode .. '")()')
 	warn"Obfuscated Using Trash Obfuscator!"
