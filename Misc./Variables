@@ -10,6 +10,10 @@ getgenv().buttonclick = function(button)
 		end)
 	end
 end
+getgenv().Obfuscate = function(String)
+	setclipboard(String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String .. "\"")
+	warn("Done Obfuscating with Trash Obfuscator!")
+end
 getgenv().RandomName = function(Size)
 	local String = ""
 	local Alphabet = {
