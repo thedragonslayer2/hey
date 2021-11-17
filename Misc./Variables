@@ -10,6 +10,16 @@ getgenv().buttonclick = function(button)
 		end)
 	end
 end
+getgenv().MrJackTable = {
+	UwULibrary = function()
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/UwUWare%20Ui")()
+		return MrJackTable.UwULibrary
+	end,
+	VenyxLibrary = function()
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/Venyx%20Ui")()
+		return MrJackTable.VenyxLibrary
+	end
+}
 getgenv().Obfuscate = function(String, Site)
 	if Site then String = game:HttpGet(String) end
 	local encode = String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String
