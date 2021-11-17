@@ -13,18 +13,11 @@ end
 getgenv().MrJackTable = {
 	UwULibrary = function()
 		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/UwUWare%20Ui")()
-		return MrJackTable.UwULibrary
+		return MrJackTable.UwULibraryLoaded
 	end,
 	VenyxLibrary = function()
 		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/Venyx%20Ui")()
-		return MrJackTable.VenyxLibrary
-	end,
-	DeleteMrJackGUI = function()
-		for i, tab in next, { game:GetService"CoreGui", game:GetService"CoreGui".RobloxGui } do
-			for _, gui in next, tab:GetChildren() do
-				if gui:IsA"ScreenGui" and string.match(gui.Name, "MrJack") then gui:Destroy() end
-			end
-		end
+		return MrJackTable.VenyxLibraryLoaded
 	end
 }
 getgenv().Obfuscate = function(String, Site)
