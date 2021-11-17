@@ -12,10 +12,12 @@ getgenv().buttonclick = function(button)
 end
 getgenv().MrJackTable = {
 	UwULibrary = function()
+		MrJackTable.UwULibraryLoaded = nil
 		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/UwUWare%20Ui")()
 		return MrJackTable.UwULibraryLoaded
 	end,
 	VenyxLibrary = function()
+		MrJackTable.VenyxLibraryLoaded = nil
 		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/Venyx%20Ui")()
 		return MrJackTable.VenyxLibraryLoaded
 	end
