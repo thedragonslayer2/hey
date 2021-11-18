@@ -7,9 +7,6 @@ coroutine.wrap(function()
 		VU:ClickButton2(Vector2.new())
 	end
 end)()
-if getconnections then
-	for i, v in pairs(getconnections(game:GetService"Players".LocalPlayer.Idled)) do v:Disable() end
-end
 -- anti discord
 local synapse, shithttp = syn and syn.request, http and http.request
 local request = http_request or request or HttpPost or synapse or shithttp
