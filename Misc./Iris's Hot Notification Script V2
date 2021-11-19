@@ -146,11 +146,11 @@ NotificationTable.CreateNotification = function(TitleData, Text, Image, Settings
 	local GradientSettings = Settings.GradientSettings
 	local MainSettings = Settings.Main
 	if getgenv then
-		if game:GetService"CoreGui":FindFirstChild"RobloxGui":FindFirstChild("NotificationFolder_" .. RandomNameForFolder) then
-			NotificationFolder = game:GetService"CoreGui":FindFirstChild"RobloxGui":FindFirstChild("NotificationFolder_" .. RandomNameForFolder)
+		if game:GetService"CoreGui":FindFirstChild("NotificationFolder_" .. RandomNameForFolder) then
+			NotificationFolder = game:GetService"CoreGui":FindFirstChild("NotificationFolder_" .. RandomNameForFolder)
 		else
 			NotificationFolder.Name = "NotificationFolder_" .. RandomNameForFolder
-			NotificationFolder.Parent = game:GetService"CoreGui":FindFirstChild"RobloxGui"
+			NotificationFolder.Parent = game:GetService"CoreGui"
 		end
 	else
 		if game:GetService"Players".LocalPlayer.PlayerGui:FindFirstChild("NotificationFolder_" .. RandomNameForFolder) then
@@ -334,11 +334,11 @@ NotificationTable.CreateWallNotification = function(TitleText, DescriptionText, 
 	local TitleSettings = Settings.TitleSettings
 	local DescriptionSettings = Settings.DescriptionSettings
 	if getgenv then
-		if game:GetService"CoreGui":FindFirstChild"RobloxGui":FindFirstChild("WallNotificationFolder_" .. WallNotifFolderName) then
-			WallNotificationFolder = game:GetService"CoreGui":FindFirstChild"RobloxGui":FindFirstChild("WallNotificationFolder_" .. WallNotifFolderName)
+		if game:GetService"CoreGui":FindFirstChild("WallNotificationFolder_" .. WallNotifFolderName) then
+			WallNotificationFolder = game:GetService"CoreGui":FindFirstChild("WallNotificationFolder_" .. WallNotifFolderName)
 		else
 			WallNotificationFolder.Name = "WallNotificationFolder_" .. WallNotifFolderName
-			WallNotificationFolder.Parent = game:GetService"CoreGui":FindFirstChild"RobloxGui"
+			WallNotificationFolder.Parent = game:GetService"CoreGui"
 		end
 	else
 		if game:GetService"Players".LocalPlayer.PlayerGui:FindFirstChild("WallNotificationFolder_" .. WallNotifFolderName) then
@@ -432,19 +432,21 @@ NotificationTable.WallNotification = function(...)
 	end)(...)
 end
 NotificationTable.ClearAllNotifications = function()
-	local lol = { game:GetService"CoreGui".RobloxGui:GetChildren(), game:GetService"Players".LocalPlayer.PlayerGui:GetChildren() }
-	for i, v in next, lol do
-		for _, gui in next, v do
-			if gui:IsA"Folder" then
-				if string.match(gui.Name, "WallNotificationFolder") or string.match(gui.Name, "NotificationFolder") then
-					for _, v in next, gui:GetChildren() do pcall(function() v:Destroy() end) end
+	coroutine.wrap(function()
+		local lol = { game:GetService"CoreGui":GetChildren(), game:GetService"Players".LocalPlayer.PlayerGui:GetChildren() }
+		for i, v in next, lol do
+			for _, gui in next, v do
+				if gui:IsA"Folder" then
+					if string.match(gui.Name, "WallNotificationFolder") or string.match(gui.Name, "NotificationFolder") then
+						for _, v in next, gui:GetChildren() do pcall(function() v:Destroy() end) end
+					end
 				end
 			end
 		end
-	end
+	end)()
 end
 if not getgenv then
-	NotificationTable.WallNotification("Error", "Your Exploit is not Supported T-T\n\nPlease download a supported Exploit!", { Duration = 10 or 1, TitleSettings = { Enabled = true }, DescriptionSettings = { Font = Enum.Font.Code } })
+	NotificationTable.WallNotification("Error", "Your Exploit is not Supported T-T\n\nPlease download a supported Exploit!", { Duration = 9e9 or 1, TitleSettings = { Enabled = true }, DescriptionSettings = { Font = Enum.Font.Code } })
 	while wait() do end
 end
 return NotificationTable
