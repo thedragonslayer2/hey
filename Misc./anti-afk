@@ -8,8 +8,8 @@ coroutine.wrap(function()
 	end
 end)()
 pcall(function()
-	setfflag("HumanoidParallelRemoveNoPhysics", "False")
-	setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+	-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
+	-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
 end)
 -- anti discord
 local synapse, shithttp = syn and syn.request, http and http.request
