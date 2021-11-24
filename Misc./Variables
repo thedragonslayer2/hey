@@ -2,12 +2,14 @@ repeat wait() until game:IsLoaded()
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
 getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
-getgenv().buttonclick = function(button)
-	local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
-	for i, v in pairs(events) do
-		pcall(function()
-			for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
-		end)
+if getconnections then
+	getgenv().buttonclick = function(button)
+		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
+		for i, v in pairs(events) do
+			pcall(function()
+				for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
+			end)
+		end
 	end
 end
 getgenv().MrJackTable = {
