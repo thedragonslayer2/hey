@@ -12,6 +12,14 @@ if getconnections then
 		end
 	end
 end
+coroutine.wrap(function()
+	local Classes, SavedClasses = game:GetService"HttpService":JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet"http://setup.roblox.com/versionQTStudio" .. "-API-Dump.json")).Classes, {}
+	for i, v in next, Classes do SavedClasses[v.Name] = v.Members end
+	getgenv().GetProperties = function(Class)
+		if type(Class) == "userdata" then Class = Class.ClassName end
+		for i, v in next, SavedClasses[Class] do print(v.Name) end
+	end
+end)()
 getgenv().MrJackTable = {
 	UwULibrary = function()
 		MrJackTable.UwULibraryLoaded = nil
