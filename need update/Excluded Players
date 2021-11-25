@@ -1,5 +1,4 @@
 	local shit = {
-		list = {
 			"Bruh_ImPro",
 			"PlayRobloxNow3",
 			"jonnyboy_12",
@@ -8,7 +7,7 @@
 			"GagoKa_12",
 			"AmazingSuperman_fan309u345",
 			"unstoppable_aaron",
-			"Confused_me"
-		}
+			"Confused_me",
+			"CheatersHoe1"
 	}
 	return shit
