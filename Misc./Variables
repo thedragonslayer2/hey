@@ -25,7 +25,7 @@ end)()
 getgenv().MrJackTable = {
 	UwULibrary = function()
 		MrJackTable.UwULibraryLoaded = nil
-		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/UwUWare%20Ui")()
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/UI-Libraries/main/UwuWare.lua")()
 		return MrJackTable.UwULibraryLoaded
 	end,
 	VenyxLibrary = function()
