@@ -17,7 +17,9 @@ coroutine.wrap(function()
 	for i, v in next, Classes do SavedClasses[v.Name] = v.Members end
 	getgenv().GetProperties = function(Class)
 		if type(Class) == "userdata" then Class = Class.ClassName end
-		for i, v in next, SavedClasses[Class] do print(v.Name) end
+		local returnto = {}
+		for i, v in next, SavedClasses[Class] do table.insert(returnto, v.Name) end
+		return returnto
 	end
 end)()
 getgenv().MrJackTable = {
