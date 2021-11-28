@@ -22,6 +22,12 @@ coroutine.wrap(function()
 		return returnto
 	end
 end)()
+getgenv().Obfuscate = function(String, Site)
+	if Site then String = game:HttpGet(String) end
+	local encode = String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String
+	setclipboard('loadstring("' .. encode .. '")()')
+	warn"Obfuscated Using Trash Obfuscator!"
+end
 getgenv().MrJackTable = {
 	UwULibrary = function()
 		MrJackTable.UwULibraryLoaded = nil
@@ -34,11 +40,38 @@ getgenv().MrJackTable = {
 		return MrJackTable.VenyxLibraryLoaded
 	end
 }
-getgenv().Obfuscate = function(String, Site)
-	if Site then String = game:HttpGet(String) end
-	local encode = String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String
-	setclipboard('loadstring("' .. encode .. '")()')
-	warn"Obfuscated Using Trash Obfuscator!"
+getgenv().orderedPairs = function(t)
+	local function cmp_multitype(op1, op2)
+		local type1, type2 = type(op1), type(op2)
+		if type1 ~= type2 then return type1 < type2
+		elseif type1 == "number" or type1 == "string" then return op1 < op2
+		elseif type1 == "boolean" then return op1 == true
+		else return tostring(op1) < tostring(op2) end
+	end
+
+	local function __genOrderedIndex(t)
+		local orderedIndex = {}
+		for key in pairs(t) do table.insert(orderedIndex, key) end
+		table.sort(orderedIndex, cmp_multitype)
+		return orderedIndex
+	end
+
+	local function orderedNext(t, state)
+		local key = nil
+		if state == nil then
+			t.__orderedIndex = __genOrderedIndex(t)
+			key = t.__orderedIndex[1]
+		else
+			for i = 1, table.getn(t.__orderedIndex) do
+				if t.__orderedIndex[i] == state then key = t.__orderedIndex[i + 1] end
+			end
+		end
+		if key then return key, t[key] end
+		t.__orderedIndex = nil
+		return
+	end
+
+	return orderedNext, t, nil
 end
 getgenv().RandomName = function(Size)
 	local String = ""
