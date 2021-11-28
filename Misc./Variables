@@ -40,7 +40,7 @@ getgenv().MrJackTable = {
 		return MrJackTable.VenyxLibraryLoaded
 	end
 }
-getgenv().orderedPairs = function(t)
+getgenv().orderedpairs = function(t)
 	local function cmp_multitype(op1, op2)
 		local type1, type2 = type(op1), type(op2)
 		if type1 ~= type2 then return type1 < type2
