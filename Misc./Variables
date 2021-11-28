@@ -40,13 +40,20 @@ getgenv().MrJackTable = {
 		return MrJackTable.VenyxLibraryLoaded
 	end
 }
-getgenv().orderedpairs = function(t)
+getgenv().orderedpairs = function(t, reverse)
 	local function cmp_multitype(op1, op2)
 		local type1, type2 = type(op1), type(op2)
-		if type1 ~= type2 then return type1 < type2
-		elseif type1 == "number" or type1 == "string" then return op1 < op2
-		elseif type1 == "boolean" then return op1 == true
-		else return tostring(op1) < tostring(op2) end
+		if reverse then
+			if type1 ~= type2 then return type1 > type2
+			elseif type1 == "number" or type1 == "string" then return op1 > op2
+			elseif type1 == "boolean" then return op1 == true
+			else return tostring(op1) > tostring(op2) end
+		else
+			if type1 ~= type2 then return type1 < type2
+			elseif type1 == "number" or type1 == "string" then return op1 < op2
+			elseif type1 == "boolean" then return op1 == true
+			else return tostring(op1) < tostring(op2) end
+		end
 	end
 
 	local function __genOrderedIndex(t)
