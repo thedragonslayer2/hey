@@ -2,6 +2,11 @@ repeat wait() until game:IsLoaded()
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
 getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
+getgenv().ClietChar = function()
+	if client.Character and client.Character:FindFirstChildOfClass"Humanoid" and client.Character:FindFirstChild"HumanoidRootPart" or client.Character.PrimaryPart then
+		return client.Character, client.Character:FindFirstChild"HumanoidRootPart" or client.Character.PrimaryPart, client.Character.Humanoid
+	end
+end
 if getconnections then
 	getgenv().buttonclick = function(button)
 		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
