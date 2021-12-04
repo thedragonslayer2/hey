@@ -19,12 +19,13 @@ if getconnections then
 end
 coroutine.wrap(function()
 	local Classes, SavedClasses = game:GetService"HttpService":JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet"http://setup.roblox.com/versionQTStudio" .. "-API-Dump.json")).Classes, {}
-	for i, v in next, Classes do SavedClasses[v.Name] = v.Members end
-	getgenv().GetProperties = function(Class)
+	for i, Class in next, Classes do
+		SavedClasses[Class.Name] = {}
+		for i, v in next, Class.Members do table.insert(SavedClasses[Class.Name], v.Name) end
+	end
+	getgenv().GetClassProperties = function(Class)
 		if type(Class) == "userdata" then Class = Class.ClassName end
-		local returnto = {}
-		for i, v in next, SavedClasses[Class] do table.insert(returnto, v.Name) end
-		return returnto
+		return SavedClasses[Class]
 	end
 end)()
 getgenv().Obfuscate = function(String, Site)
