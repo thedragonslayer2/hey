@@ -1,16 +1,10 @@
 repeat wait() until game:IsLoaded()
 local client, VU = game:GetService"Players".LocalPlayer, game:GetService"VirtualUser"
 -- anti afk
-coroutine.wrap(function()
-	while wait(540) do
-		VU:CaptureController()
-		VU:ClickButton2(Vector2.new())
-	end
-end)()
-pcall(function()
+if syn then
 	-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
 	-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-end)
+end
 -- anti discord
 local synapse, shithttp = syn and syn.request, http and http.request
 local request = http_request or request or HttpPost or synapse or shithttp
@@ -39,9 +33,9 @@ coroutine.wrap(function()
 			OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...) return OldNamecall(Self, ...) end)
 		]]
 		-- Anti Noclip Bypass
-		local rnd, BypassNoclip = Random.new():NextInteger(150, 1e5)
+		local BypassNoclip
 		BypassNoclip = hookmetamethod(Enum.HumanoidStateType, "__index", function(Self, Index)
-			if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return rnd end
+			if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return Random.new():NextInteger(150, 1e5) end
 			return BypassNoclip(Self, Index)
 		end)
 		-- Spoof Account
@@ -74,6 +68,20 @@ coroutine.wrap(function()
 			hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
 		end
 		pcall(function() setreadonly(getrawmetatable(game), true) end)
+	end
+end)()
+coroutine.wrap(function()
+	if settings then settings().Physics.AllowSleep = false end
+	while task.wait() and setsimulationradius and sethiddenproperty and settings do
+		for _, Players in next, game:GetService"Players":GetPlayers() do
+			if Players ~= game:GetService"Players".LocalPlayer then
+				Players.MaximumSimulationRadius = 0
+				sethiddenproperty(Players, "SimulationRadius", 0)
+			end
+			task.wait()
+		end
+		game:GetService"Players".LocalPlayer.MaximumSimulationRadius = math.pow(math.huge, math.huge)
+		setsimulationradius(math.huge)
 	end
 end)()
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
