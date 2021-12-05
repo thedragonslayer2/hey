@@ -1,158 +1,75 @@
 repeat wait() until game:IsLoaded()
-getgenv().players = game:GetService"Players"
-getgenv().client = game:GetService"Players".LocalPlayer
-getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
-getgenv().GetChar = function(Player)
-	if not Player or type(Player) ~= "userdata" or Player.ClassName ~= "Player" then Player = client end
-	if Player.Character and Player.Character:FindFirstChildOfClass"Humanoid" and Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart then
-		return Player.Character, Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart, Player.Character.Humanoid
-	end
+local client, VU = game:GetService"Players".LocalPlayer, game:GetService"VirtualUser"
+-- anti afk
+if syn then
+	-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
+	-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
 end
-if getconnections then
-	getgenv().buttonclick = function(button)
-		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
-		for i, v in pairs(events) do
-			pcall(function()
-				for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
-			end)
-		end
-	end
-end
-coroutine.wrap(function()
-	local Classes, SavedClasses = game:GetService"HttpService":JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet"http://setup.roblox.com/versionQTStudio" .. "-API-Dump.json")).Classes, {}
-	for i, Class in next, Classes do
-		SavedClasses[Class.Name] = {}
-		for i, v in next, Class.Members do table.insert(SavedClasses[Class.Name], v.Name) end
-	end
-	getgenv().GetClassProperties = function(Class)
-		if type(Class) == "userdata" then Class = Class.ClassName end
-		return SavedClasses[Class]
-	end
-end)()
-getgenv().Obfuscate = function(String, Site)
-	if Site then String = game:HttpGet(String) end
-	local encode = String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String
-	setclipboard('loadstring("' .. encode .. '")()')
-	warn"Obfuscated Using Trash Obfuscator!"
-end
-getgenv().MrJackTable = {
-	UwULibrary = function()
-		MrJackTable.UwULibraryLoaded = nil
-		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/UI-Libraries/main/UwuWare.lua")()
-		return MrJackTable.UwULibraryLoaded
-	end,
-	VenyxLibrary = function()
-		MrJackTable.VenyxLibraryLoaded = nil
-		loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Ui%20Lbs/Venyx%20Ui")()
-		return MrJackTable.VenyxLibraryLoaded
-	end
-}
-getgenv().orderedpairs = function(t, reverse)
-	local function cmp_multitype(op1, op2)
-		local type1, type2 = type(op1), type(op2)
-		if reverse then
-			if type1 ~= type2 then return type1 > type2
-			elseif type1 == "number" or type1 == "string" then return op1 > op2
-			elseif type1 == "boolean" then return op1 == true
-			else return tostring(op1) > tostring(op2) end
-		else
-			if type1 ~= type2 then return type1 < type2
-			elseif type1 == "number" or type1 == "string" then return op1 < op2
-			elseif type1 == "boolean" then return op1 == true
-			else return tostring(op1) < tostring(op2) end
-		end
-	end
-
-	local function __genOrderedIndex(t)
-		local orderedIndex = {}
-		for key in pairs(t) do table.insert(orderedIndex, key) end
-		table.sort(orderedIndex, cmp_multitype)
-		return orderedIndex
-	end
-
-	local function orderedNext(t, state)
-		local key = nil
-		if state == nil then
-			t.__orderedIndex = __genOrderedIndex(t)
-			key = t.__orderedIndex[1]
-		else
-			for i = 1, table.getn(t.__orderedIndex) do
-				if t.__orderedIndex[i] == state then key = t.__orderedIndex[i + 1] end
+-- anti discord
+local synapse, shithttp = syn and syn.request, http and http.request
+local request = http_request or request or HttpPost or synapse or shithttp
+if request and hookfunction then
+	anti_webhook = hookfunction(request, function(self)
+		if self.Url and self.Method == "POST" and self.Url then
+			if string.find(self.Url, "Bypass") then self.Url = string.gsub(self.Url, "Bypass", "")
+			else
+				local abcdef = { Url = self.Url, Method = "DELETE" }
+				request(abcdef)
+				self.Url = "SOMEONE TRYING TO LOG SOMETHING!"
 			end
 		end
-		if key then return key, t[key] end
-		t.__orderedIndex = nil
-		return
+		return anti_webhook(self)
+	end)
+end
+coroutine.wrap(function()
+	if hookmetamethod then
+		pcall(function() setreadonly(getrawmetatable(game), false) end)
+		--[[
+			local OldIndex
+			OldIndex = hookmetamethod(game, "__index", function(Self, Index) return OldIndex(Self, Index) end)
+			local OldNewIndex
+			OldNewIndex = hookmetamethod(game, "__newindex", function(Self, Index, Value) return OldNewIndex(Self, Index, Value) end)
+			local OldNamecall
+			OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...) return OldNamecall(Self, ...) end)
+		]]
+		-- Anti Noclip Bypass
+		local BypassNoclip
+		BypassNoclip = hookmetamethod(Enum.HumanoidStateType, "__index", function(Self, Index)
+			if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return Random.new():NextInteger(150, 1e5) end
+			return BypassNoclip(Self, Index)
+		end)
+		-- Spoof Account
+		local acc_spoof
+		acc_spoof = hookmetamethod(game, "__index", function(Self, Index)
+			if Index == "AccountAge" and Self == client then return tonumber"99999"
+			elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
+			return acc_spoof(Self, Index)
+		end)
+		local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
+		-- things
+		local OldNamecall
+		OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
+			local method = getnamecallmethod()
+			if method == "kick" or method == "Kick" then
+				local args = { ... }
+				if args[1] and args[1] == "MrJack" then OldNamecall(Self, args[2]) end
+				return wait(math.huge)
+			elseif (method == "UserOwnsGamePassAsync" or method == "PlayerOwnsAsset") and Self == MarketplaceService then return true
+			elseif (method == "UserHasBadgeAsync" or method == "UserHasBadge") and Self == BadgeService then return true
+			elseif method == "PlayerHasPass" and Self == GamePassService then return true
+			elseif method == "GetRankInGroup" and Self == client then return 255
+			elseif method == "IsInGroup" and Self == client then return true end
+			return OldNamecall(Self, ...)
+		end)
+		-- gamepass thing
+		if hookfunction then
+			hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
+			hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
+			hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
+		end
+		pcall(function() setreadonly(getrawmetatable(game), true) end)
 	end
-
-	return orderedNext, t, nil
-end
-getgenv().RandomName = function(Size)
-	local String = ""
-	local Alphabet = {
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7",
-		"8",
-		"9",
-		"0",
-		"a",
-		"b",
-		"c",
-		"d",
-		"e",
-		"f",
-		"g",
-		"h",
-		"i",
-		"j",
-		"k",
-		"l",
-		"m",
-		"n",
-		"o",
-		"p",
-		"q",
-		"r",
-		"s",
-		"t",
-		"u",
-		"v",
-		"w",
-		"x",
-		"y",
-		"z",
-		"A",
-		"B",
-		"C",
-		"D",
-		"E",
-		"F",
-		"G",
-		"H",
-		"I",
-		"J",
-		"K",
-		"L",
-		"M",
-		"N",
-		"O",
-		"P",
-		"Q",
-		"R",
-		"S",
-		"T",
-		"U",
-		"V",
-		"W",
-		"X",
-		"Y",
-		"Z"
-	}
-	for i = 1, Size do String = String .. Alphabet[math.random(#Alphabet)] end
-	return String
-end
+end)()
+client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
+client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
+client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
