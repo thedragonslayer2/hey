@@ -70,20 +70,6 @@ coroutine.wrap(function()
 		pcall(function() setreadonly(getrawmetatable(game), true) end)
 	end
 end)()
-coroutine.wrap(function()
-	if settings then settings().Physics.AllowSleep = false end
-	while task.wait() and setsimulationradius and sethiddenproperty and settings do
-		for _, Players in next, game:GetService"Players":GetPlayers() do
-			if Players ~= game:GetService"Players".LocalPlayer then
-				Players.MaximumSimulationRadius = 0
-				sethiddenproperty(Players, "SimulationRadius", 0)
-			end
-			task.wait()
-		end
-		game:GetService"Players".LocalPlayer.MaximumSimulationRadius = math.pow(math.huge, math.huge)
-		setsimulationradius(math.huge)
-	end
-end)()
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
 client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
 client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
