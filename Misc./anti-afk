@@ -15,6 +15,7 @@ if request and hookfunction then
 			else
 				local abcdef = { Url = self.Url, Method = "DELETE" }
 				request(abcdef)
+				setreadonly(self.Url, false)
 				self.Url = "SOMEONE TRYING TO LOG SOMETHING!"
 			end
 		end
