@@ -1,5 +1,5 @@
 repeat wait() until game:IsLoaded()
-local client, VU = game:GetService"Players".LocalPlayer, game:GetService"VirtualUser"
+local client = game:GetService"Players".LocalPlayer
 -- anti afk
 if syn then
 	-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
@@ -22,8 +22,9 @@ if request and hookfunction then
 	end)
 end
 coroutine.wrap(function()
+	local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
+	pcall(function() setreadonly(getrawmetatable(game), false) end)
 	if hookmetamethod then
-		pcall(function() setreadonly(getrawmetatable(game), false) end)
 		--[[
 			local OldIndex
 			OldIndex = hookmetamethod(game, "__index", function(Self, Index) return OldIndex(Self, Index) end)
@@ -45,15 +46,17 @@ coroutine.wrap(function()
 			elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
 			return acc_spoof(Self, Index)
 		end)
-		local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
 		-- things
 		local OldNamecall
 		OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
-			local method = getnamecallmethod()
+			local method, args = getnamecallmethod(), { ... }
 			if method == "kick" or method == "Kick" then
-				local args = { ... }
 				if args[1] and args[1] == "MrJack" then OldNamecall(Self, args[2]) end
 				return wait(math.huge)
+				--[[
+					elseif (method == "FindFirstChild" or method == "WaitForChild" or method == "FindFirstChildWhichIsA" or method == "FindFirstColdOfClass") and args[1] and args[1] == "BodyVelocity" then return
+					elseif (method == "Connect" or method == "connect") and Self.Name == "Strafing" then return wait(math.huge)
+				]]
 			elseif (method == "UserOwnsGamePassAsync" or method == "PlayerOwnsAsset") and Self == MarketplaceService then return true
 			elseif (method == "UserHasBadgeAsync" or method == "UserHasBadge") and Self == BadgeService then return true
 			elseif method == "PlayerHasPass" and Self == GamePassService then return true
@@ -61,13 +64,12 @@ coroutine.wrap(function()
 			elseif method == "IsInGroup" and Self == client then return true end
 			return OldNamecall(Self, ...)
 		end)
-		-- gamepass thing
-		if hookfunction then
-			hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
-			hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
-			hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
-		end
-		pcall(function() setreadonly(getrawmetatable(game), true) end)
+	end
+	-- gamepass thing
+	if hookfunction then
+		hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
+		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
+		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
 	end
 end)()
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
