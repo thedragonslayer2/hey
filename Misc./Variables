@@ -18,7 +18,7 @@ if getconnections then
 		end
 	end
 end
-if fireproximityprompt then
+if not fireproximityprompt then
 	getgenv().fireproximityprompt = function(Obj, Amount)
 		if Obj.ClassName == "ProximityPrompt" then
 			local PromptTime = Obj.HoldDuration
