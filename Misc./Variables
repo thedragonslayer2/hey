@@ -23,8 +23,7 @@ if not fireproximityprompt then
 		if Obj.ClassName == "ProximityPrompt" then
 			local PromptTime = Obj.HoldDuration
 			Obj.HoldDuration = 0
-			Obj.Enabled = true
-			Obj.RequiresLineOfSight = false
+			Obj.Enabled, Obj.RequiresLineOfSight = true, false
 			for i = 1, Amount or 1 do
 				Obj:InputHoldBegin()
 				Obj:InputHoldEnd()
