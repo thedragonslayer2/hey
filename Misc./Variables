@@ -18,20 +18,6 @@ if getconnections then
 		end
 	end
 end
-if not fireproximityprompt then
-	getgenv().fireproximityprompt = function(Obj, Amount)
-		if Obj.ClassName == "ProximityPrompt" then
-			local PromptTime = Obj.HoldDuration
-			Obj.HoldDuration = 0
-			Obj.Enabled, Obj.RequiresLineOfSight = true, false
-			for i = 1, Amount or 1 do
-				Obj:InputHoldBegin()
-				Obj:InputHoldEnd()
-			end
-			Obj.HoldDuration = PromptTime
-		else error"userdata<ProximityPrompt> expected" end
-	end
-end
 coroutine.wrap(function()
 	local Classes, SavedClasses = game:GetService"HttpService":JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet"http://setup.roblox.com/versionQTStudio" .. "-API-Dump.json")).Classes, {}
 	for i, Class in next, Classes do
@@ -170,3 +156,19 @@ getgenv().RandomName = function(Size)
 	for i = 1, Size do String = String .. Alphabet[math.random(#Alphabet)] end
 	return String
 end
+--[[
+	if not fireproximityprompt then
+	getgenv().fireproximityprompt = function(Obj, Amount)
+	if Obj.ClassName == "ProximityPrompt" then
+	local PromptTime = Obj.HoldDuration
+	Obj.HoldDuration = 0
+	Obj.Enabled, Obj.RequiresLineOfSight = true, false
+	for i = 1, Amount or 1 do
+	Obj:InputHoldBegin()
+	Obj:InputHoldEnd()
+	end
+	Obj.HoldDuration = PromptTime
+	else error"userdata<ProximityPrompt> expected" end
+	end
+	end
+]]
