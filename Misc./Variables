@@ -16,6 +16,9 @@ if getconnections then
 				for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
 			end)
 		end
+		if firesignal then
+			for i, v in pairs(events) do pcall(function() firesignal(button[v]) end) end
+		end
 	end
 end
 coroutine.wrap(function()
@@ -161,8 +164,7 @@ end
 	getgenv().fireproximityprompt = function(Obj, Amount)
 	if Obj.ClassName == "ProximityPrompt" then
 	local PromptTime = Obj.HoldDuration
-	Obj.HoldDuration = 0
-	Obj.Enabled, Obj.RequiresLineOfSight = true, false
+	Obj.Enabled, Obj.RequiresLineOfSight,Obj.HoldDuration = true, false,0
 	for i = 1, Amount or 1 do
 	Obj:InputHoldBegin()
 	Obj:InputHoldEnd()
