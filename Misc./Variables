@@ -8,13 +8,15 @@ getgenv().GetChar = function(Player)
 		return Player.Character, Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart, Player.Character.Humanoid
 	end
 end
-if getconnections then
+if getconnections or firesignal then
 	getgenv().buttonclick = function(button)
 		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
-		for i, v in pairs(events) do
-			pcall(function()
-				for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
-			end)
+		if getconnections then
+			for i, v in pairs(events) do
+				pcall(function()
+					for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
+				end)
+			end
 		end
 		if firesignal then
 			for i, v in pairs(events) do pcall(function() firesignal(button[v]) end) end
