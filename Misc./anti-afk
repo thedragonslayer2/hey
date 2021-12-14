@@ -1,79 +1,82 @@
-repeat wait() until game:IsLoaded()
-local client = game:GetService"Players".LocalPlayer
--- anti afk
-if syn then
-	-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
-	-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-end
--- anti discord
-local synapse, shithttp = syn and syn.request, http and http.request
-local request = http_request or request or HttpPost or synapse or shithttp
-if request and hookfunction and not WebsiteRequest then
-	anti_webhook = hookfunction(request, function(self)
-		if self.Url and self.Method == "POST" and self.Url then
-			if string.find(self.Url, "Bypass") then self.Url = string.gsub(self.Url, "Bypass", "")
-			else
-				local abcdef = { Url = self.Url, Method = "DELETE" }
-				request(abcdef)
-				setreadonly(self.Url, false)
-				self.Url = "SOMEONE TRYING TO LOG SOMETHING!"
+if not MrJackMisc then
+	repeat wait() until game:IsLoaded()
+	local client = game:GetService"Players".LocalPlayer
+	-- anti afk
+	if syn then
+		-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
+		-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+	end
+	-- anti discord
+	local synapse, shithttp = syn and syn.request, http and http.request
+	local request = http_request or request or HttpPost or synapse or shithttp
+	if request and hookfunction and not WebsiteRequest then
+		anti_webhook = hookfunction(request, function(self)
+			if self.Url and self.Method == "POST" and self.Url then
+				if string.find(self.Url, "Bypass") then self.Url = string.gsub(self.Url, "Bypass", "")
+				else
+					local abcdef = { Url = self.Url, Method = "DELETE" }
+					request(abcdef)
+					setreadonly(self.Url, false)
+					self.Url = "SOMEONE TRYING TO LOG SOMETHING!"
+				end
 			end
+			return anti_webhook(self)
+		end)
+		getgenv().WebsiteRequest = request
+	end
+	coroutine.wrap(function()
+		local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
+		pcall(function() setreadonly(getrawmetatable(game), false) end)
+		-- gamepass thing
+		if hookfunction then
+			hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
+			hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
+			hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
 		end
-		return anti_webhook(self)
-	end)
-	getgenv().WebsiteRequest = request
-end
-coroutine.wrap(function()
-	local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
-	pcall(function() setreadonly(getrawmetatable(game), false) end)
-	-- gamepass thing
-	if hookfunction then
-		hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
-		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
-		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
-	end
-	if hookmetamethod then
-		--[[
-			local OldIndex
-			OldIndex = hookmetamethod(game, "__index", function(Self, Index) return OldIndex(Self, Index) end)
-			local OldNewIndex
-			OldNewIndex = hookmetamethod(game, "__newindex", function(Self, Index, Value) return OldNewIndex(Self, Index, Value) end)
+		if hookmetamethod then
+			--[[
+				local OldIndex
+				OldIndex = hookmetamethod(game, "__index", function(Self, Index) return OldIndex(Self, Index) end)
+				local OldNewIndex
+				OldNewIndex = hookmetamethod(game, "__newindex", function(Self, Index, Value) return OldNewIndex(Self, Index, Value) end)
+				local OldNamecall
+				OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...) return OldNamecall(Self, ...) end)
+			]]
+			-- Anti Noclip Bypass
+			local BypassNoclip
+			BypassNoclip = hookmetamethod(Enum.HumanoidStateType, "__index", function(Self, Index)
+				if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return Random.new():NextInteger(150, 1e5) end
+				return BypassNoclip(Self, Index)
+			end)
+			-- Spoof Account
+			local acc_spoof
+			acc_spoof = hookmetamethod(game, "__index", function(Self, Index)
+				if Index == "AccountAge" and Self == client then return tonumber"99999"
+				elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
+				return acc_spoof(Self, Index)
+			end)
+			-- things
 			local OldNamecall
-			OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...) return OldNamecall(Self, ...) end)
-		]]
-		-- Anti Noclip Bypass
-		local BypassNoclip
-		BypassNoclip = hookmetamethod(Enum.HumanoidStateType, "__index", function(Self, Index)
-			if Index == "StrafingNoPhysics" and Self == Enum.HumanoidStateType then return Random.new():NextInteger(150, 1e5) end
-			return BypassNoclip(Self, Index)
-		end)
-		-- Spoof Account
-		local acc_spoof
-		acc_spoof = hookmetamethod(game, "__index", function(Self, Index)
-			if Index == "AccountAge" and Self == client then return tonumber"99999"
-			elseif Index == "MembershipType" and Self == client then return Enum.MembershipType.Premium end
-			return acc_spoof(Self, Index)
-		end)
-		-- things
-		local OldNamecall
-		OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
-			local method, args = getnamecallmethod(), { ... }
-			if method == "kick" or method == "Kick" then
-				if args[1] and args[1] == "MrJack" then OldNamecall(Self, args[2]) end
-				return wait(math.huge)
-				--[[
-					elseif (method == "FindFirstChild" or method == "WaitForChild" or method == "FindFirstChildWhichIsA" or method == "FindFirstColdOfClass") and args[1] and args[1] == "BodyVelocity" then return
-					elseif (method == "Connect" or method == "connect") and Self.Name == "Strafing" then return wait(math.huge)
-				]]
-			elseif (method == "UserOwnsGamePassAsync" or method == "PlayerOwnsAsset") and Self == MarketplaceService then return true
-			elseif (method == "UserHasBadgeAsync" or method == "UserHasBadge") and Self == BadgeService then return true
-			elseif method == "PlayerHasPass" and Self == GamePassService then return true
-			elseif method == "GetRankInGroup" and Self == client then return 255
-			elseif method == "IsInGroup" and Self == client then return true end
-			return OldNamecall(Self, ...)
-		end)
-	end
-end)()
-client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
-client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
-client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+			OldNamecall = hookmetamethod(game, "__namecall", function(Self, ...)
+				local method, args = getnamecallmethod(), { ... }
+				if method == "kick" or method == "Kick" then
+					if args[1] and args[1] == "MrJack" then OldNamecall(Self, args[2]) end
+					return wait(math.huge)
+					--[[
+						elseif (method == "FindFirstChild" or method == "WaitForChild" or method == "FindFirstChildWhichIsA" or method == "FindFirstColdOfClass") and args[1] and args[1] == "BodyVelocity" then return
+						elseif (method == "Connect" or method == "connect") and Self.Name == "Strafing" then return wait(math.huge)
+					]]
+				elseif (method == "UserOwnsGamePassAsync" or method == "PlayerOwnsAsset") and Self == MarketplaceService then return true
+				elseif (method == "UserHasBadgeAsync" or method == "UserHasBadge") and Self == BadgeService then return true
+				elseif method == "PlayerHasPass" and Self == GamePassService then return true
+				elseif method == "GetRankInGroup" and Self == client then return 255
+				elseif method == "IsInGroup" and Self == client then return true end
+				return OldNamecall(Self, ...)
+			end)
+		end
+	end)()
+	client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
+	client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
+	client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+	getgenv().MrJackMisc = true
+end
