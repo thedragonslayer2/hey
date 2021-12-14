@@ -2,7 +2,6 @@ repeat wait() until game:IsLoaded()
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
 getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
-getgenv().WebsiteRequest = http_request or request or HttpPost or syn and syn.request or http and http.request
 getgenv().GetChar = function(Player)
 	if not Player or type(Player) ~= "userdata" or Player.ClassName ~= "Player" then Player = game:GetService"Players".LocalPlayer end
 	if Player.Character and Player.Character:FindFirstChildOfClass"Humanoid" and Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart then
@@ -168,18 +167,3 @@ getgenv().RandomName = function(Size)
 	for i = 1, Size do String = String .. Alphabet[math.random(#Alphabet)] end
 	return String
 end
---[[
-	if not fireproximityprompt then
-	getgenv().fireproximityprompt = function(Obj, Amount)
-	if Obj.ClassName == "ProximityPrompt" then
-	local PromptTime = Obj.HoldDuration
-	Obj.Enabled, Obj.RequiresLineOfSight,Obj.HoldDuration = true, false,0
-	for i = 1, Amount or 1 do
-	Obj:InputHoldBegin()
-	Obj:InputHoldEnd()
-	end
-	Obj.HoldDuration = PromptTime
-	else error"userdata<ProximityPrompt> expected" end
-	end
-	end
-]]
