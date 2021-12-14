@@ -2,6 +2,7 @@ repeat wait() until game:IsLoaded()
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
 getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
+getgenv().WebsiteRequest = http_request or request or HttpPost or syn and syn.request or http and http.request
 getgenv().GetChar = function(Player)
 	if not Player or type(Player) ~= "userdata" or Player.ClassName ~= "Player" then Player = game:GetService"Players".LocalPlayer end
 	if Player.Character and Player.Character:FindFirstChildOfClass"Humanoid" and Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart then
@@ -10,7 +11,13 @@ getgenv().GetChar = function(Player)
 end
 if getconnections or firesignal then
 	getgenv().buttonclick = function(button)
-		local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
+		local events = {
+			"MouseButton1Click",
+			"MouseButton1Down",
+			"Activated",
+			"mouseClick",
+			"MouseClick"
+		}
 		if getconnections then
 			for i, v in pairs(events) do
 				pcall(function()
