@@ -8,7 +8,7 @@ end
 -- anti discord
 local synapse, shithttp = syn and syn.request, http and http.request
 local request = http_request or request or HttpPost or synapse or shithttp
-if request and hookfunction then
+if request and hookfunction and not WebsiteRequest then
 	anti_webhook = hookfunction(request, function(self)
 		if self.Url and self.Method == "POST" and self.Url then
 			if string.find(self.Url, "Bypass") then self.Url = string.gsub(self.Url, "Bypass", "")
@@ -21,10 +21,17 @@ if request and hookfunction then
 		end
 		return anti_webhook(self)
 	end)
+	getgenv().WebsiteRequest = request
 end
 coroutine.wrap(function()
 	local BadgeService, GamePassService, MarketplaceService = game:GetService"BadgeService", game:GetService"GamePassService", game:GetService"MarketplaceService"
 	pcall(function() setreadonly(getrawmetatable(game), false) end)
+	-- gamepass thing
+	if hookfunction then
+		hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
+		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
+		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
+	end
 	if hookmetamethod then
 		--[[
 			local OldIndex
@@ -65,12 +72,6 @@ coroutine.wrap(function()
 			elseif method == "IsInGroup" and Self == client then return true end
 			return OldNamecall(Self, ...)
 		end)
-	end
-	-- gamepass thing
-	if hookfunction then
-		hookfunction(MarketplaceService.UserOwnsGamePassAsync or MarketplaceService.PlayerOwnsAsset, function(...) return true end)
-		hookfunction(BadgeService.UserHasBadgeAsync or BadgeService.UserHasBadge, function(...) return true end)
-		hookfunction(GamePassService.PlayerHasPass, function(...) return true end)
 	end
 end)()
 client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
