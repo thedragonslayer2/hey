@@ -16,8 +16,7 @@ if not MrJackMisc then
 				else
 					local abcdef = { Url = self.Url, Method = "DELETE" }
 					request(abcdef)
-					setreadonly(self.Url, false)
-					self.Url = "SOMEONE TRYING TO LOG SOMETHING!"
+					return {}
 				end
 			end
 			return anti_webhook(self)
