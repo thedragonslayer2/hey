@@ -78,5 +78,15 @@ if not MrJackMisc then
 	client:GetPropertyChangedSignal"DevCameraOcclusionMode":Connect(function() client.DevCameraOcclusionMode = "Invisicam" end)
 	client:GetPropertyChangedSignal"CameraMaxZoomDistance":Connect(function() client.CameraMaxZoomDistance = 9e4 end)
 	client.DevCameraOcclusionMode, client.CameraMaxZoomDistance = "Invisicam", 9e4
+	pcall(function()
+		if getconnections then
+			for i, v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do v:Disable() end
+		else
+			game.Players.LocalPlayer.Idled:connect(function()
+				game:GetService"VirtualUser":CaptureController()
+				game:GetService"VirtualUser":ClickButton2(Vector2.new())
+			end)
+		end
+	end)
 	getgenv().MrJackMisc = true
 end
