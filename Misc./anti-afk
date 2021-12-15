@@ -2,9 +2,9 @@ if not MrJackMisc then
 	repeat wait() until game:IsLoaded()
 	local client = game:GetService"Players".LocalPlayer
 	-- anti afk
-	if syn then
-		-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
-		-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+	if syn and syn.get_thread_identity then
+		setfflag("HumanoidParallelRemoveNoPhysics", "False")
+		setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
 	end
 	-- anti discord
 	local synapse, shithttp = syn and syn.request, http and http.request
