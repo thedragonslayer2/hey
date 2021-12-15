@@ -29,17 +29,6 @@ if getconnections or firesignal then
 		end
 	end
 end
-coroutine.wrap(function()
-	local Classes, SavedClasses = game:GetService"HttpService":JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet"http://setup.roblox.com/versionQTStudio" .. "-API-Dump.json")).Classes, {}
-	for i, Class in next, Classes do
-		SavedClasses[Class.Name] = {}
-		for i, v in next, Class.Members do table.insert(SavedClasses[Class.Name], v.Name) end
-	end
-	getgenv().GetClassProperties = function(Class)
-		if type(Class) == "userdata" then Class = Class.ClassName end
-		return SavedClasses[Class]
-	end
-end)()
 getgenv().Obfuscate = function(String, Site)
 	if Site then String = game:HttpGet(String) end
 	local encode = String:gsub(".", function(bb) return "\\" .. bb:byte() end) or String
