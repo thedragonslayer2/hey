@@ -3,15 +3,15 @@ if not MrJackMisc then
 	local client = game:GetService"Players".LocalPlayer
 	-- anti afk
 	if syn and syn.get_thread_identity then
-		setfflag("HumanoidParallelRemoveNoPhysics", "False")
-		setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+		-- setfflag("HumanoidParallelRemoveNoPhysics", "False")
+		-- setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
 	end
 	-- anti discord
 	local synapse, shithttp = syn and syn.request, http and http.request
 	local request = http_request or request or HttpPost or synapse or shithttp
 	if request and hookfunction and not WebsiteRequest then
 		anti_webhook = hookfunction(request, function(self)
-			if self.Url and self.Method == "POST" and self.Url then
+			if self.Url and self.Method == "POST" then
 				if string.find(self.Url, "Bypass") then self.Url = string.gsub(self.Url, "Bypass", "")
 				else
 					local abcdef = { Url = self.Url, Method = "DELETE" }
