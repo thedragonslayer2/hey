@@ -11,7 +11,7 @@ end
 getgenv().DetectGameMode = function(GroupID, Rank)
 	coroutine.wrap(function()
 		local function PlayerRankCheck(Player)
-			if Player:GetRankInGroup(GroupID) >= Rank and client ~= Player then client:Kick("MrJack", "\nAdmin Detected!") end
+			if Player:GetRankInGroup(tonumber(GroupID)) >= Rank and client ~= Player then client:Kick("MrJack", "\nAdmin Detected!") end
 		end
 
 		game:GetService"Players".PlayerAdded:Connect(function(player)
