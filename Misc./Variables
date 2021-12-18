@@ -8,6 +8,19 @@ getgenv().GetChar = function(Player)
 		return Player.Character, Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart, Player.Character.Humanoid
 	end
 end
+getgenv().DetectGameMode = function(GroupID, Rank)
+	coroutine.wrap(function()
+		local function PlayerRankCheck(Player)
+			if Player:GetRankInGroup(GroupID) >= Rank and client ~= Player then client:Kick("MrJack", "\nAdmin Detected!") end
+		end
+
+		game:GetService"Players".PlayerAdded:Connect(function(player)
+			wait(0.2)
+			PlayerRankCheck(player)
+		end)
+		for _, player in next, game:GetService"Players":GetChildren() do PlayerRankCheck(player) end
+	end)()
+end
 if getconnections or firesignal then
 	getgenv().buttonclick = function(button)
 		local events = {
@@ -156,3 +169,29 @@ getgenv().RandomName = function(Size)
 	for i = 1, Size do String = String .. Alphabet[math.random(#Alphabet)] end
 	return String
 end
+--[[
+	if not fireproximityprompt then
+	getgenv().fireproximityprompt = function(Obj, Amount)
+	if Obj.ClassName == "ProximityPrompt" then
+	local PromptTime = Obj.HoldDuration
+	Obj.Enabled, Obj.RequiresLineOfSight,Obj.HoldDuration = true, false,0
+	for i = 1, Amount or 1 do
+	Obj:InputHoldBegin()
+	Obj:InputHoldEnd()
+	end
+	Obj.HoldDuration = PromptTime
+	else error"userdata<ProximityPrompt> expected" end
+	end
+	end
+	coroutine.wrap(function()
+	local Classes, SavedClasses = game:GetService"HttpService":JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet"http://setup.roblox.com/versionQTStudio" .. "-API-Dump.json")).Classes, {}
+	for i, Class in next, Classes do
+	SavedClasses[Class.Name] = {}
+	for i, v in next, Class.Members do table.insert(SavedClasses[Class.Name], v.Name) end
+	end
+	getgenv().GetClassProperties = function(Class)
+	if type(Class) == "userdata" then Class = Class.ClassName end
+	return SavedClasses[Class]
+	end
+	end)()
+]]
