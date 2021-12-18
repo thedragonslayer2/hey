@@ -8,7 +8,7 @@ getgenv().GetChar = function(Player)
 		return Player.Character, Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart, Player.Character.Humanoid
 	end
 end
-getgenv().DetectGameMode = function(GroupID, Rank)
+getgenv().ModsDetector = function(GroupID, Rank)
 	coroutine.wrap(function()
 		local function PlayerRankCheck(Player)
 			if Player:GetRankInGroup(tonumber(GroupID)) >= Rank and client ~= Player then client:Kick("MrJack", "\nAdmin Detected!") end
