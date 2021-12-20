@@ -33,15 +33,13 @@ if getconnections or firesignal then
 			"mouseClick",
 			"MouseClick"
 		}
-		if getconnections then
-			for i, v in pairs(events) do
+		for i, v in pairs(events) do
+			if getconnections then
 				pcall(function()
 					for i, v in pairs(getconnections(button[v])) do pcall(function() v:Fire() end) end
 				end)
 			end
-		end
-		if firesignal then
-			for i, v in pairs(events) do pcall(function() firesignal(button[v]) end) end
+			if firesignal then pcall(function() firesignal(button[v]) end) end
 		end
 	end
 end
