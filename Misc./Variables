@@ -1,7 +1,9 @@
 repeat wait() until game:IsLoaded()
+getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
+getgenv().HowToGetKeyLink = "https://bit.ly/3oHhFPC"
+getgenv().PermanentPassLink = "https://thedragonslayer2.github.io/"
 getgenv().players = game:GetService"Players"
 getgenv().client = game:GetService"Players".LocalPlayer
-getgenv().DiscordInvite = "https://discord.gg/474DYGPua5"
 getgenv().GetChar = function(Player)
 	if not Player or type(Player) ~= "userdata" or Player.ClassName ~= "Player" then Player = game:GetService"Players".LocalPlayer end
 	if Player.Character and Player.Character:FindFirstChildOfClass"Humanoid" and Player.Character:FindFirstChild"HumanoidRootPart" or Player.Character.PrimaryPart then
@@ -11,6 +13,7 @@ end
 getgenv().ModsDetector = function(GroupID, Rank)
 	coroutine.wrap(function()
 		local function PlayerRankCheck(Player)
+			repeat task.wait() until Player.GetRankInGroup
 			if Player:GetRankInGroup(tonumber(GroupID)) >= Rank and client ~= Player then client:Kick("MrJack", "\nAdmin Detected!") end
 		end
 
