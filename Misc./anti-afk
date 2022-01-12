@@ -3,8 +3,8 @@ if not getgenv().MrJackMisc then
 	local a = game:GetService"Players".LocalPlayer
 	pcall(function()
 		if getgenv().identifyexecutor() == "Synapse X" then
-			getgenv().setfflag("HumanoidParallelRemoveNoPhysics", "False")
-			getgenv().setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+			--getgenv().setfflag("HumanoidParallelRemoveNoPhysics", "False")
+			--getgenv().setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
 		end
 	end)
 	local b, c = syn and syn.request, http and http.request
